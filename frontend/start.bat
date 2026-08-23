@@ -1,6 +1,6 @@
 @echo off
 echo ==========================================
-echo Starting Adhikar AI (FastAPI + React)
+echo Starting Vigrah AI (FastAPI + React)
 echo ==========================================
 
 echo [1/2] Starting FastAPI Backend on port 8000...

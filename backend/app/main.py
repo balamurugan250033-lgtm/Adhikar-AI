@@ -30,7 +30,7 @@ def detect_state(data: dict, city: str):
 
 def get_smart_department_routing(problem: str, city: str):
     p = problem.lower()
-    if any(k in p for k in ["ration", "food", "pds", "rice", "wheat"]):
+    if any(k in p for k in ["ration", "food", "pds", "rice", "wheat", "ரேஷன்", "கார்டு", "உணவு"]):
         return "Department of Civil Supplies and Consumer Protection", "State Civil Supplies Corporation", "Public Information Officer, Civil Supplies Department", 0.94
     elif any(k in p for k in ["road", "pothole", "street light", "drainage", "garbage", "water"]):
         return "Housing and Urban Affairs Ministry", f"Corporation of {city} (Municipal Body)", f"Public Information Officer, Corporation of {city}", 0.91
@@ -45,7 +45,7 @@ def get_smart_department_routing(problem: str, city: str):
 
 def summarize_request(problem: str):
     topic = problem.lower()
-    if any(word in topic for word in ("ration", "food", "pds", "rice", "wheat")):
+    if any(word in topic for word in ("ration", "food", "pds", "rice", "wheat", "ரேஷன்", "கார்டு", "உணவு")):
         return "Request for ration card application status"
     if any(word in topic for word in ("road", "pothole", "street light", "drainage", "garbage", "water")):
         return "Request for municipal service records"
@@ -56,6 +56,18 @@ def summarize_request(problem: str):
     if any(word in topic for word in ("college", "university", "exam", "certificate", "degree", "marksheet")):
         return "Request for education records"
     return "Request for public service records"
+
+def request_description(problem: str):
+    topic = problem.lower()
+    if any(word in topic for word in ("ration", "food", "pds", "rice", "wheat", "ரேஷன்", "கார்டு", "உணவு")):
+        return "the pending ration card or public distribution service application"
+    if any(word in topic for word in ("road", "pothole", "street light", "drainage", "garbage", "water")):
+        return "the reported municipal service issue"
+    if any(word in topic for word in ("police", "fir", "crime", "station", "complaint")):
+        return "the police complaint or station record"
+    if any(word in topic for word in ("electricity", "power", "bill", "transformer")):
+        return "the electricity service or billing matter"
+    return "the public service matter described by the applicant"
 
 # Comprehensive localization templates for all 22 official scheduled languages of India
 INSTRUCTIONS_DB = {
@@ -348,7 +360,7 @@ Phone Number                             Email ID
 INFORMATION REQUESTED
 I, {full_name}, a citizen of India, hereby seek the following information under the RTI Act, 2005:
 
-1. Certified copies of all official notes, memos, file movement logs, and correspondence related to: {problem}.
+1. Certified copies of all official notes, memos, file movement logs, and correspondence related to {request_description(problem)}.
 2. Names, designations, and contact particulars of the public officials officially responsible for handling this matter.
 3. Official status report and actions taken regarding this pending reference/grievance.
 4. Prescribed departmental timeline or service level agreement (SLA) for resolving this issue, along with reasons for any delay.

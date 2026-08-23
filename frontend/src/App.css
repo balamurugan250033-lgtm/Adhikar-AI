@@ -1004,9 +1004,29 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .overview-item h3 { margin-bottom: 0.35rem; font-size: 0.95rem; }
 .overview-item p { color: #526174; font-size: 0.78rem; line-height: 1.55; }
 
+.form-assistant {
+  padding: 1.5rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.form-assistant h2 { display: flex; align-items: center; gap: 0.5rem; color: var(--civic-navy); font-size: 1.25rem; }
+.form-assistant > p { margin: 0.5rem 0 1.2rem; color: #64748b; font-size: 0.85rem; }
+.form-assistant-form { display: grid; gap: 0.45rem; }
+.form-assistant-form label { color: var(--civic-navy); font-size: 0.78rem; font-weight: 700; }
+.form-assistant-form select, .form-assistant-form textarea { width: 100%; padding: 0.7rem; border: 1px solid #cbd5e1; border-radius: 7px; color: #1e293b; background: #f8fafc; font: inherit; font-size: 0.85rem; }
+.form-assistant-form button { display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem; margin-top: 0.5rem; padding: 0.75rem 1rem; border-radius: 7px; color: #fff; background: var(--civic-navy); font-weight: 700; }
+.form-result { margin-top: 1rem; padding: 0.85rem; border-left: 3px solid var(--civic-navy); background: #eef3f8; color: var(--civic-navy); font-size: 0.8rem; }
+.form-result p { margin-top: 0.3rem; color: #526174; line-height: 1.5; }
+
 .dark-mode .civic-overview { background: linear-gradient(135deg, #293337 0%, #303b40 100%); border-color: #46545a; }
 .dark-mode .overview-item { background: #293337; border-color: #596970; }
 .dark-mode .overview-item p { color: #cbd5e1; }
+.dark-mode .form-assistant { background: #293337; border-color: #46545a; }
+.dark-mode .form-assistant h2, .dark-mode .form-assistant-form label { color: #f4f7f7; }
+.dark-mode .form-assistant > p, .dark-mode .form-result p { color: #cbd5e1; }
+.dark-mode .form-assistant-form select, .dark-mode .form-assistant-form textarea { color: #f4f7f7; background: #303b40; border-color: #718087; }
 
 @media (max-width: 640px) {
   .utility-inner { padding-inline: 1rem; }

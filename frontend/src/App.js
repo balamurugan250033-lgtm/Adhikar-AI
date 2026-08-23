@@ -414,7 +414,7 @@ export default function App() {
   const [apiOnline, setApiOnline] = useState(null);
 
   const [formData, setFormData] = useState({
-    applicant_name: 'DEEPAN RAJU U',
+    applicant_name: '',
     address: '',
     city: '',
     pincode: '',

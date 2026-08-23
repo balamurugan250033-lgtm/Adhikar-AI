@@ -9,6 +9,7 @@ import {
   Link2,
   MapPin,
   ShieldAlert,
+  TriangleAlert,
   User,
 } from 'lucide-react';
 
@@ -66,6 +67,11 @@ export default function SubmissionGuidelines({ result = {}, formData = {} }) {
         <span className="submission-phase phase-form"><strong>Phase 1</strong> Form Fill</span>
         <span className="submission-phase phase-fee"><strong>Phase 2</strong> Fee Payment</span>
         <span className="submission-phase phase-track"><strong>Phase 3</strong> Confirmation &amp; Tracking</span>
+      </div>
+
+      <div className="submission-warning" role="note">
+        <TriangleAlert size={18} aria-hidden="true" />
+        <div><strong>Verify before filing</strong><span>The department, PIO, and address shown are recommendations and may be illustrative. Confirm the exact details on the official portal before submitting.</span></div>
       </div>
 
       <div className="submission-card-grid">

@@ -359,9 +359,6 @@ FEE DETAILS
 {state_config['fee']} Payment channel: verify the current instructions on {state_config['portal']} or with the public authority. (BPL applicants may be exempt with valid proof.)
 --------------------------------------------------------------------------------
 
-SUBMISSION NOTE
-This address is an illustrative format. Verify the exact PIO, public authority, and address on {state_config['portal']} or the relevant state RTI portal before filing.
-
 DECLARATION
 I hereby declare that the above information is true to the best of my knowledge. I request that the information be provided within the statutory period as per Section 7(1) of the RTI Act, 2005.
 

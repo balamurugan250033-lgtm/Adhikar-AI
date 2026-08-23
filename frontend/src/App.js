@@ -795,22 +795,23 @@ const handleSubmit = async (e, submissionData = formData) => {
 
       {/* Landing Page */}
       {step === 'landing' && (
-        <main id="main-content" className="max-w-7xl mx-auto px-6 py-16">
-          <div className="grid lg:grid-cols-12 gap-12 items-center">
+        <main id="main-content" className="max-w-7xl mx-auto px-6 py-12 lg:py-16">
+          <div className="grid lg:grid-cols-12 gap-10 items-center">
             <div className="lg:col-span-7 space-y-6">
-              <span className="inline-block max-w-full px-3 py-1 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-700 text-xs font-bold tracking-wide uppercase">
-                Citizen support for RTI and public services
+              <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-700 text-xs font-bold tracking-wide uppercase shadow-sm">
+                <ShieldCheck size={14} className="text-indigo-600" aria-hidden="true" />
+                Citizen Support for RTI & Public Services
               </span>
-              <h1 className="max-w-4xl break-words text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
+              <h1 className="max-w-4xl break-words text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-[1.15]">
                 {t.heroTitle}
               </h1>
-              <p className="text-lg text-slate-600 leading-relaxed">
+              <p className="text-base sm:text-lg text-slate-600 leading-relaxed max-w-2xl">
                 {t.heroDesc}
               </p>
-              <div className="pt-4 flex flex-wrap gap-4">
+              <div className="pt-2 flex flex-wrap gap-4">
                 <button
                   onClick={handleGetStarted}
-                  className="px-8 py-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-base shadow-xl shadow-indigo-600/30 transition-all cursor-pointer"
+                  className="px-8 py-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-base shadow-xl shadow-indigo-600/30 transition-all cursor-pointer hover:translate-y-[-1px] active:translate-y-[1px]"
                 >
                   {t.getStarted}
                 </button>
@@ -819,56 +820,102 @@ const handleSubmit = async (e, submissionData = formData) => {
 
             {/* History Sidebar / Quick Access on Landing */}
             <div className="lg:col-span-5 bg-white rounded-2xl border border-slate-200 shadow-xl shadow-slate-200/50 p-6">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="font-bold text-slate-900 text-sm"><FileText size={15} aria-hidden="true" /> {cleanLabel(t.historyTitle)}</h3>
+              <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-100 dark:border-slate-800">
+                <h3 className="font-bold text-slate-900 text-sm flex items-center gap-2">
+                  <FileText size={16} className="text-indigo-600" aria-hidden="true" /> 
+                  {cleanLabel(t.historyTitle)}
+                </h3>
                 {history.length > 0 && (
                   <button onClick={handleClearHistory} className="clear-history">Clear All</button>
                 )}
               </div>
-              <div className="max-h-80 overflow-y-auto space-y-3">
+              <div className="max-h-80 overflow-y-auto space-y-3 pr-1">
                 {history.length === 0 ? (
                   <p className="text-xs text-slate-500 italic py-8 text-center">{t.noHistory}</p>
                 ) : (
                   history.map((item) => (
-                    <div key={item.id} className="p-3 rounded-xl bg-slate-50 border border-slate-200 hover:border-indigo-300 transition-all flex items-center justify-between">
-                      <div className="overflow-hidden pr-2">
+                    <div key={item.id} className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 hover:border-indigo-300 transition-all flex items-center justify-between gap-2 group">
+                      <div className="overflow-hidden min-w-0 flex-1">
                         <p className="text-xs font-bold text-slate-800 truncate">{item.applicant_name || 'RTI Draft'} ({item.city || 'Chennai'})</p>
-                        <p className="text-[10px] text-slate-500">{item.date} • {item.language}</p>
+                        <p className="text-[10px] text-slate-500 mt-0.5">{item.date} • {item.language}</p>
                       </div>
-                      <button
-                        onClick={() => handleLoadHistory(item)}
-                        className="px-3 py-1 bg-indigo-600 text-white text-xs rounded-lg font-medium shrink-0 cursor-pointer"
-                      >
-                        {t.loadDraft}
-                      </button>
-                      <button type="button" onClick={() => handleDeleteHistory(item.id)} className="delete-draft" aria-label={`Delete draft for ${item.applicant_name || 'RTI application'}`} title="Delete this draft">
-                        <Trash2 size={14} aria-hidden="true" />
-                      </button>
+                      <div className="flex items-center gap-1.5 shrink-0">
+                        <button
+                          onClick={() => handleLoadHistory(item)}
+                          className="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs rounded-lg font-semibold cursor-pointer shadow-sm transition-all"
+                        >
+                          {t.loadDraft}
+                        </button>
+                        <button type="button" onClick={() => handleDeleteHistory(item.id)} className="delete-draft" aria-label={`Delete draft for ${item.applicant_name || 'RTI application'}`} title="Delete this draft">
+                          <Trash2 size={13} aria-hidden="true" />
+                        </button>
+                      </div>
                     </div>
                   ))
                 )}
               </div>
             </div>
           </div>
-          <section className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-5" aria-label="How this works and data privacy">
-            <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
-              <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2"><Info size={19} aria-hidden="true" /> How this works</h2>
-              <p className="mt-2 text-sm text-slate-600 leading-relaxed">Describe the records or action you need. Adhikar AI suggests a public authority and prepares a draft for your review. It never files an application for you.</p>
+
+          {/* Info Highlights */}
+          <section className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6" aria-label="How this works and data privacy">
+            <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm flex items-start gap-4">
+              <div className="w-10 h-10 rounded-xl shrink-0 flex items-center justify-center bg-indigo-50 text-indigo-600">
+                <Info size={20} aria-hidden="true" />
+              </div>
+              <div>
+                <h2 className="text-base font-bold text-slate-900 mb-1">How this works</h2>
+                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">Describe the records or action you need. Adhikar AI suggests a public authority and prepares a structured draft for your review. It never files an application for you.</p>
+              </div>
             </div>
-            <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
-              <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2"><ShieldCheck size={19} aria-hidden="true" /> Data privacy</h2>
-              <p className="mt-2 text-sm text-slate-600 leading-relaxed">Draft history is kept in this browser only. Avoid entering Aadhaar, PAN, passwords, or other sensitive information.</p>
+            <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm flex items-start gap-4">
+              <div className="w-10 h-10 rounded-xl shrink-0 flex items-center justify-center bg-emerald-50 text-emerald-600">
+                <ShieldCheck size={20} aria-hidden="true" />
+              </div>
+              <div>
+                <h2 className="text-base font-bold text-slate-900 mb-1">Data privacy</h2>
+                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">Draft history is kept in this browser only. Avoid entering Aadhaar, PAN, passwords, or other confidential credentials.</p>
+              </div>
             </div>
           </section>
+
+          {/* Citizen Workflow */}
           <section className="civic-overview" aria-labelledby="civic-overview-title">
             <div className="overview-heading">
               <p className="section-label">CITIZEN WORKFLOW</p>
               <h2 id="civic-overview-title" className="section-title">Clear information. Practical next steps.</h2>
             </div>
             <div className="overview-grid">
-              <article className="overview-item"><Landmark size={21} aria-hidden="true" /><div><h3>Find the right authority</h3><p>Describe your issue and receive a department, public authority, and PIO recommendation to verify.</p></div></article>
-              <article className="overview-item"><ClipboardCheck size={21} aria-hidden="true" /><div><h3>Prepare with confidence</h3><p>Get a structured RTI draft with Section 6(1), a clear request, and state-aware fee guidance.</p></div></article>
-              <article className="overview-item"><Clock3 size={21} aria-hidden="true" /><div><h3>Track what happens next</h3><p>Save the draft locally, record filing status, and watch the 30-day response window.</p></div></article>
+              <article className="overview-item">
+                <div className="overview-item-header">
+                  <div className="overview-item-icon">
+                    <Landmark size={20} aria-hidden="true" />
+                  </div>
+                  <span className="overview-step-pill">01</span>
+                </div>
+                <h3>Find the right authority</h3>
+                <p>Describe your issue and receive a department, public authority, and PIO recommendation to verify.</p>
+              </article>
+              <article className="overview-item">
+                <div className="overview-item-header">
+                  <div className="overview-item-icon">
+                    <ClipboardCheck size={20} aria-hidden="true" />
+                  </div>
+                  <span className="overview-step-pill">02</span>
+                </div>
+                <h3>Prepare with confidence</h3>
+                <p>Get a structured RTI draft with Section 6(1), a clear request, and state-aware fee guidance.</p>
+              </article>
+              <article className="overview-item">
+                <div className="overview-item-header">
+                  <div className="overview-item-icon">
+                    <Clock3 size={20} aria-hidden="true" />
+                  </div>
+                  <span className="overview-step-pill">03</span>
+                </div>
+                <h3>Track what happens next</h3>
+                <p>Save the draft locally, record filing status, and watch the 30-day response window.</p>
+              </article>
             </div>
           </section>
         </main>

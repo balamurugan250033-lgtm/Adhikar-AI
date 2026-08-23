@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { apiUrl, readJsonResponse } from './api';
 import './App.css';
 import { Accessibility, Download, ExternalLink, FileText, Home, Info, Languages, Mic, ShieldCheck, Square } from 'lucide-react';
+import SubmissionGuidelines from './components/SubmissionGuidelines';
 
 // 22 Official Indian Languages + English with Speech recognition locale codes
 const LANGUAGES = [
@@ -695,7 +696,6 @@ const handleSubmit = async (e, submissionData = formData) => {
   };
 
   const resolvedDraft = result?.rti_draft || result?.draft || result?.text || result?.application || result?.response || '';
-  const resolvedInstructions = result?.instructions || result?.guidelines || result?.steps || 'Fill out the form on the landing page...';
 
   return (
     <div className={`min-h-screen bg-slate-50 text-slate-900 font-sans ${highContrast ? 'high-contrast' : ''}`}>
@@ -1036,13 +1036,7 @@ const handleSubmit = async (e, submissionData = formData) => {
               </div>
             </div>
 
-            {/* Submission Guidelines Section */}
-            <div className="bg-white rounded-2xl border border-slate-200 shadow-xl shadow-slate-200/50 p-6">
-              <h3 className="font-bold text-slate-900 text-sm mb-3">{t.sectionBTitle}</h3>
-              <div className="w-full h-96 p-4 bg-slate-50 border border-slate-200 rounded-xl overflow-y-auto whitespace-pre-wrap text-xs text-slate-700">
-                {resolvedInstructions}
-              </div>
-            </div>
+            <SubmissionGuidelines result={result} formData={formData} />
           </div>
         </main>
       )}

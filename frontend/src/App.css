@@ -690,6 +690,104 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   background: var(--civic-navy);
 }
 
+.submission-guidelines {
+  grid-column: 1 / -1;
+  padding: 1.25rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.submission-heading-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.submission-heading-row h3,
+.submission-card h4 {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: var(--civic-navy);
+  font-family: "Merriweather", Georgia, serif;
+}
+
+.submission-heading-row h3 { font-size: 0.95rem; }
+.submission-card h4 { margin-bottom: 0.85rem; font-size: 0.9rem; }
+
+.submission-copy-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.7rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: #f8fafc;
+  color: var(--civic-navy);
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.submission-copy-button:hover { background: #eef3f8; }
+
+.submission-card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.submission-card {
+  padding: 1rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  background: #f8fafc;
+  transition: box-shadow 160ms ease, transform 160ms ease;
+}
+
+.submission-card:hover {
+  box-shadow: 0 4px 20px rgba(30, 58, 95, 0.08);
+  transform: translateY(-1px);
+}
+
+.submission-detail {
+  display: grid;
+  grid-template-columns: 1.4rem minmax(0, 1fr);
+  gap: 0.65rem;
+  padding: 0.7rem 0;
+  border-top: 1px solid #e2e8f0;
+  color: var(--civic-navy);
+}
+
+.submission-detail-label {
+  margin-bottom: 0.2rem;
+  color: #64748b;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.submission-detail-value {
+  color: #334155;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.submission-detail-value a { color: var(--civic-navy); text-decoration: underline; }
+.submission-detail-emphasis { border-left: 3px solid var(--civic-navy); padding-left: 0.55rem; }
+.submission-detail-emphasis .submission-detail-value { color: var(--civic-navy); font-weight: 700; }
+.submission-disclaimer { margin-top: 0.85rem; color: #64748b; font-size: 0.72rem; }
+
+@media (max-width: 700px) {
+  .submission-card-grid { grid-template-columns: 1fr; }
+  .submission-heading-row { align-items: flex-start; flex-direction: column; }
+  .submission-copy-button { width: 100%; justify-content: center; }
+}
+
 .official-document {
   font-family: Georgia, "Times New Roman", serif;
   line-height: 1.65;

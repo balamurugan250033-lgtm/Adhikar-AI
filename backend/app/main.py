@@ -400,6 +400,7 @@ Signature of Applicant"""
             "pio": pio,
             "confidence": confidence,
             "state": state,
+            "portal": state_config["portal"],
             "fee_instructions": state_config["fee"],
             "appeal_info": "No response within 30 days: consider a First Appeal under Section 19(1). A Second Appeal may be filed under Section 19(3) if required.",
             "response_due_days": 30,

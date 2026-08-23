@@ -91,7 +91,7 @@ PHASE 3 - CONFIRMATION AND TRACKING
 Recommended department: {department}
 Recommended PIO: {pio}
 Important: This is guidance only. Verify the exact PIO and address before filing."""
-    return {"rti_draft": draft, "instructions": instructions, "department": department, "public_authority": authority, "pio": pio, "confidence": confidence, "state": state, "fee_instructions": fee, "appeal_info": "If there is no response within 30 days, consider a First Appeal under Section 19(1).", "response_due_days": 30, "status_options": ["Draft", "Filed", "Awaiting Response", "Appealed", "Resolved"]}
+    return {"rti_draft": draft, "instructions": instructions, "department": department, "public_authority": authority, "pio": pio, "confidence": confidence, "state": state, "portal": portal, "fee_instructions": fee, "appeal_info": "If there is no response within 30 days, consider a First Appeal under Section 19(1).", "response_due_days": 30, "status_options": ["Draft", "Filed", "Awaiting Response", "Appealed", "Resolved"]}
 
 
 @app.post("/api/rights/navigate")

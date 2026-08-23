@@ -2,7 +2,7 @@ import logo from './logo.png';
 import React, { useState, useEffect } from 'react';
 import { apiUrl, readJsonResponse } from './api';
 import './App.css';
-import { Accessibility, ArrowDown, Download, ExternalLink, FileText, Home, Info, Languages, Mic, Moon, ShieldCheck, Square, Sun, Trash2 } from 'lucide-react';
+import { Accessibility, ArrowDown, Clock3, ClipboardCheck, Download, ExternalLink, FileText, Home, Info, Languages, Landmark, Mic, Moon, ShieldCheck, Square, Sun, Trash2 } from 'lucide-react';
 import SubmissionGuidelines from './components/SubmissionGuidelines';
 
 // 22 Official Indian Languages + English with Speech recognition locale codes
@@ -829,6 +829,17 @@ const handleSubmit = async (e, submissionData = formData) => {
             <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
               <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2"><ShieldCheck size={19} aria-hidden="true" /> Data privacy</h2>
               <p className="mt-2 text-sm text-slate-600 leading-relaxed">Draft history is kept in this browser only. Avoid entering Aadhaar, PAN, passwords, or other sensitive information.</p>
+            </div>
+          </section>
+          <section className="civic-overview" aria-labelledby="civic-overview-title">
+            <div className="overview-heading">
+              <p className="section-label">CITIZEN WORKFLOW</p>
+              <h2 id="civic-overview-title" className="section-title">Clear information. Practical next steps.</h2>
+            </div>
+            <div className="overview-grid">
+              <article className="overview-item"><Landmark size={21} aria-hidden="true" /><div><h3>Find the right authority</h3><p>Describe your issue and receive a department, public authority, and PIO recommendation to verify.</p></div></article>
+              <article className="overview-item"><ClipboardCheck size={21} aria-hidden="true" /><div><h3>Prepare with confidence</h3><p>Get a structured RTI draft with Section 6(1), a clear request, and state-aware fee guidance.</p></div></article>
+              <article className="overview-item"><Clock3 size={21} aria-hidden="true" /><div><h3>Track what happens next</h3><p>Save the draft locally, record filing status, and watch the 30-day response window.</p></div></article>
             </div>
           </section>
         </main>

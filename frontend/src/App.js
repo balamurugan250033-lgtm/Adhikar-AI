@@ -623,10 +623,10 @@ const handleSubmit = async (e) => {
         <main className="max-w-7xl mx-auto px-6 py-16">
           <div className="grid lg:grid-cols-12 gap-12 items-center">
             <div className="lg:col-span-7 space-y-6">
-              <span className="inline-block px-3 py-1 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-700 text-xs font-bold tracking-wide uppercase">
-                🇮🇳 Empowering Citizens with Legal AI
+              <span className="inline-block max-w-full px-3 py-1 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-700 text-xs font-bold tracking-wide uppercase">
+                🇮🇳 Citizen support for RTI and public services
               </span>
-              <h1 className="text-4xl sm:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
+              <h1 className="max-w-4xl break-words text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
                 {t.heroTitle}
               </h1>
               <p className="text-lg text-slate-600 leading-relaxed">

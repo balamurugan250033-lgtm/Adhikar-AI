@@ -1,8 +1,20 @@
-# Vigrah AI - Automated RTI Drafting Assistant
+# Vigrah AI
 
-> **Live Demo:** [https://vigrah.vercel.app/](https://vigrah.vercel.app/)
+Make public services easier to understand, access, and follow up.
 
-Vigrah AI is a citizen support tool designed to streamline public service requests and simplify filing Right to Information (RTI) applications across India.
+Vigrah AI is a citizen-support application for preparing clear Right to Information (RTI) applications and discovering relevant public-service guidance. It combines a React interface with a FastAPI backend and supports multilingual workflows for citizens in India.
+
+> **Disclaimer:** Vigrah AI is an independent informational tool. It is not a Government of India website, does not submit applications on a citizen's behalf, and does not replace official instructions or legal advice. Always verify details on the relevant government portal before submitting.
+
+---
+
+## 🔗 Live Links
+
+* **Repository:** [github.com/balamurugan250033-lgtm/Vigrah-AI](https://github.com/balamurugan250033-lgtm/Vigrah-AI)
+* **Production website:** [vigrah.vercel.app](https://vigrah.vercel.app/)
+* **Frontend (local):** `http://localhost:3000`
+* **Backend health check (local):** `http://localhost:8000`
+* **Interactive API docs (local):** `http://localhost:8000/docs`
 
 ---
 
@@ -21,19 +33,41 @@ Vigrah AI is a citizen support tool designed to streamline public service reques
 
 ---
 
-## ✨ Features
+## ✨ What It Does
 
-* **Automated Application Drafting:** Instant legal drafting for RTI inquiries (e.g., status updates, file movement details).
-* **Multilingual Support:** Describe problems in native regional languages while generating standardized legal drafts in English.
-* **One-Click Export:** Download formatted RTI drafts directly as PDFs or copy plain text to clipboard.
-* **Draft History:** Automatically saves past draft sessions locally for quick retrieval.
-* **Accessibility First:** Includes High Contrast, Dark Mode, and Light Mode options.
+* **Automated RTI Drafting:** Generates structured RTI application drafts from a citizen's issue.
+* **Smart Routing:** Routes common problems toward a likely ministry or public authority.
+* **Submission Guidance:** Provides submission guidance and next steps after drafting.
+* **Multilingual Workflows:** Supports English and India's scheduled-language workflows.
+* **Voice Input:** Offers voice input where the browser supports Speech Recognition.
+* **Local Persistence:** Stores draft history locally in the browser for convenient follow-up.
+* **Rights & Guidance Tools:** Includes public-service rights and government-scheme tools.
 
 ---
 
-## 🚀 Quick Setup
+## 🛠️ Technology
 
-1. **Clone the repository:**
-   ```bash
-   git clone [https://github.com/balamurugan250033-lgtm/Vigrah-AI.git](https://github.com/balamurugan250033-lgtm/Vigrah-AI.git)
-   cd Vigrah-AI
+| Layer | Technology |
+| :--- | :--- |
+| **Frontend** | React 19, Tailwind CSS, Create React App |
+| **Backend** | FastAPI, Uvicorn, Python |
+| **Client requests** | Fetch API and Axios |
+| **Local persistence** | Browser localStorage |
+
+---
+
+## 🚀 Run Locally
+
+### Prerequisites
+
+* Python 3.10 or newer
+* Node.js 18 or newer
+* npm
+
+### 1. Start the backend
+
+From the repository root:
+```bash
+cd backend
+python -m pip install fastapi uvicorn
+python -m uvicorn app.main:app --reload --port 8000

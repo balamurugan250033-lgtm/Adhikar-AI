@@ -70,6 +70,10 @@ The frontend proxies `/api` requests to the local backend. On Vercel, the includ
 
 From the repository root, run `frontend\start.bat` to launch both services in separate terminal windows. The shortcut assumes Python dependencies are already installed and that `uvicorn` is available on `PATH`.
 
+### Deploy on Vercel
+
+Import the GitHub repository root (`Adhikar-AI`) as the Vercel project. Leave **Root Directory** blank; do not select `frontend` as the project root. The root `vercel.json`, `api/index.py`, and `requirements.txt` configure the React build and FastAPI serverless function together. After deployment, verify `https://your-domain.vercel.app/api/health` returns JSON with `status: online`.
+
 ## API Surface
 
 | Method | Endpoint | Purpose |

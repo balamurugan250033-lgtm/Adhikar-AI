@@ -448,6 +448,7 @@ export default function App() {
   const [history, setHistory] = useState([]);
   const [filingStatus, setFilingStatus] = useState('Draft');
   const [filedAt, setFiledAt] = useState(null);
+  const [draftId, setDraftId] = useState(null);
   const [loadingStage, setLoadingStage] = useState(0);
 
   const t = UI_TEXT[language] || UI_TEXT['English'];
@@ -533,8 +534,9 @@ const handleSubmit = async (e, submissionData = formData) => {
       setFilingStatus('Draft');
       setFiledAt(null);
 
+      const newDraftId = Date.now();
       const newEntry = {
-        id: Date.now(),
+        id: newDraftId,
         ...submissionData,
         rti_draft: data.rti_draft || data.draft || data.text || JSON.stringify(data),
         instructions: data.instructions || data.guidelines || data.steps || 'Follow standard portal guidelines.',
@@ -550,6 +552,7 @@ const handleSubmit = async (e, submissionData = formData) => {
 
       const updatedHistory = [newEntry, ...history];
       setHistory(updatedHistory);
+      setDraftId(newDraftId);
       localStorage.setItem('adhikar_rti_history', JSON.stringify(updatedHistory));
 
       setStep('result');
@@ -608,6 +611,7 @@ const handleSubmit = async (e, submissionData = formData) => {
   };
 
   const handleLoadHistory = (item) => {
+    setDraftId(item.id);
     setFormData({
       applicant_name: item.applicant_name || '',
       address: item.address || '',
@@ -625,6 +629,23 @@ const handleSubmit = async (e, submissionData = formData) => {
     setStep('result');
     setFilingStatus(item.status || 'Draft');
     setFiledAt(item.filed_at || null);
+  };
+
+  const handleStatusChange = (event) => {
+    const nextStatus = event.target.value;
+    const nextFiledAt = (nextStatus === 'Filed' || nextStatus === 'Awaiting Response')
+      ? (filedAt || new Date().toISOString())
+      : filedAt;
+    setFilingStatus(nextStatus);
+    setFiledAt(nextFiledAt);
+
+    if (draftId) {
+      const updatedHistory = history.map(item => item.id === draftId
+        ? { ...item, status: nextStatus, filed_at: nextFiledAt }
+        : item);
+      setHistory(updatedHistory);
+      localStorage.setItem('adhikar_rti_history', JSON.stringify(updatedHistory));
+    }
   };
 
   const handleClearHistory = () => {
@@ -907,11 +928,12 @@ const handleSubmit = async (e, submissionData = formData) => {
               </div>
               <div className="bg-slate-900 rounded-2xl p-5 text-white shadow-sm">
                 <p className="text-[11px] uppercase tracking-wide font-bold text-indigo-300 mb-2">Filing tracker</p>
-                <select value={filingStatus} onChange={e => { setFilingStatus(e.target.value); if (e.target.value === 'Filed') setFiledAt(new Date().toISOString()); }} className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white">
+                <select value={filingStatus} onChange={handleStatusChange} className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white">
                   {(result.status_options || ['Draft', 'Filed', 'Awaiting Response', 'Appealed', 'Resolved']).map(status => <option key={status}>{status}</option>)}
                 </select>
                 {filedAt && <p className="mt-3 text-xs text-slate-300">Response window: 30 days from filing.</p>}
-                {filedAt && <p className="mt-1 text-sm font-bold text-white">Due {new Date(new Date(filedAt).getTime() + 30 * 86400000).toLocaleDateString()}</p>}
+                {filedAt && <p className="mt-1 text-sm font-bold text-white">{Math.max(0, Math.ceil((new Date(filedAt).getTime() + 30 * 86400000 - Date.now()) / 86400000))} days remaining</p>}
+                {!filedAt && <p className="mt-3 text-xs text-slate-300">Choose Filed to start the response clock.</p>}
                 <p className="mt-3 text-[11px] text-slate-400">No response by day 30? Consider a First Appeal under Section 19(1).</p>
               </div>
             </div>

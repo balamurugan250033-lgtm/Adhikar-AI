@@ -30,6 +30,24 @@ const LANGUAGES = [
 ];
 
 // Complete UI Localization Dictionary for all 22 Official Indian Languages + City/Pincode fields
+const STATES = ['Tamil Nadu', 'Karnataka', 'Maharashtra', 'Delhi', 'Kerala', 'Other state'];
+
+const SAMPLE_FORM = {
+  applicant_name: 'Asha Kumar',
+  address: '12 Lake View Road',
+  city: 'Chennai',
+  pincode: '600001',
+  state: 'Tamil Nadu',
+  phone: '9876543210',
+  email: 'asha@example.com',
+  question: 'My ration card application has been pending for four months. Please provide the file status, reasons for delay, and action taken by the responsible officials.'
+};
+
+const DEMO_HISTORY = [
+  { id: 'demo-1', applicant_name: 'Demo citizen', city: 'Chennai', language: 'English', date: 'Demo example', question: SAMPLE_FORM.question, rti_draft: 'Example draft ready to review', instructions: 'Review the PIO and portal guidance before filing.' },
+  { id: 'demo-2', applicant_name: 'Demo citizen', city: 'Bengaluru', language: 'English', date: 'Demo example', question: 'Request the status of a delayed street-light repair.', rti_draft: 'Example civic information request', instructions: 'Review the public authority before filing.' }
+];
+
 const UI_TEXT = {
   English: {
     brand: "Adhikar AI", tagline: "Automated RTI Drafting Assistant",
@@ -418,6 +436,7 @@ export default function App() {
     address: '',
     city: '',
     pincode: '',
+    state: 'Tamil Nadu',
     phone: '',
     email: '',
     question: '',
@@ -427,6 +446,9 @@ export default function App() {
   const [result, setResult] = useState(null);
   const [copied, setCopied] = useState(false);
   const [history, setHistory] = useState([]);
+  const [filingStatus, setFilingStatus] = useState('Draft');
+  const [filedAt, setFiledAt] = useState(null);
+  const [loadingStage, setLoadingStage] = useState(0);
 
   const t = UI_TEXT[language] || UI_TEXT['English'];
 
@@ -438,12 +460,22 @@ export default function App() {
     const savedHistory = localStorage.getItem('adhikar_rti_history');
     if (savedHistory) {
       try {
-        setHistory(JSON.parse(savedHistory));
+        const parsedHistory = JSON.parse(savedHistory);
+        setHistory(Array.isArray(parsedHistory) && parsedHistory.length ? parsedHistory : DEMO_HISTORY);
       } catch (e) {
         console.error("Failed to parse history", e);
+        setHistory(DEMO_HISTORY);
       }
+    } else {
+      setHistory(DEMO_HISTORY);
     }
   }, []);
+
+  useEffect(() => {
+    if (!loading) return undefined;
+    const timer = setInterval(() => setLoadingStage(stage => (stage + 1) % 3), 700);
+    return () => clearInterval(timer);
+  }, [loading]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -482,15 +514,15 @@ export default function App() {
     recognition.start();
   };
 
-const handleSubmit = async (e) => {
-    e.preventDefault();
+const handleSubmit = async (e, submissionData = formData) => {
+  if (e) e.preventDefault();
     setLoading(true);
 
     try {
       const response = await fetch(apiUrl('/api/rti/draft'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...formData, language })
+        body: JSON.stringify({ ...submissionData, language })
       });
 
       const data = await readJsonResponse(response);
@@ -498,12 +530,20 @@ const handleSubmit = async (e) => {
 
       setResult(data);
       setApiOnline(true);
+      setFilingStatus('Draft');
+      setFiledAt(null);
 
       const newEntry = {
         id: Date.now(),
-        ...formData,
+        ...submissionData,
         rti_draft: data.rti_draft || data.draft || data.text || JSON.stringify(data),
         instructions: data.instructions || data.guidelines || data.steps || 'Follow standard portal guidelines.',
+        department: data.department,
+        public_authority: data.public_authority,
+        pio: data.pio,
+        confidence: data.confidence,
+        state: data.state,
+        status: 'Draft',
         language,
         date: new Date().toLocaleDateString()
       };
@@ -520,6 +560,12 @@ const handleSubmit = async (e) => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleSample = () => {
+    setFormData(SAMPLE_FORM);
+    setStep('form');
+    handleSubmit(null, SAMPLE_FORM);
   };
 
   const handleCopy = () => {
@@ -567,6 +613,9 @@ const handleSubmit = async (e) => {
       address: item.address || '',
       city: item.city || '',
       pincode: item.pincode || '',
+      state: item.state || 'Tamil Nadu',
+      phone: item.phone || '',
+      email: item.email || '',
       question: item.question || ''
     });
     setResult({
@@ -574,6 +623,8 @@ const handleSubmit = async (e) => {
       instructions: item.instructions
     });
     setStep('result');
+    setFilingStatus(item.status || 'Draft');
+    setFiledAt(item.filed_at || null);
   };
 
   const handleClearHistory = () => {
@@ -638,6 +689,12 @@ const handleSubmit = async (e) => {
                   className="px-8 py-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-base shadow-xl shadow-indigo-600/30 transition-all cursor-pointer"
                 >
                   {t.getStarted}
+                </button>
+                <button
+                  onClick={handleSample}
+                  className="px-6 py-4 rounded-xl border border-indigo-200 bg-white hover:bg-indigo-50 text-indigo-700 font-bold text-base transition-all cursor-pointer"
+                >
+                  Try a sample problem
                 </button>
               </div>
             </div>
@@ -742,6 +799,19 @@ const handleSubmit = async (e) => {
                 </div>
               </div>
               <div>
+                <label className="block text-xs font-semibold text-slate-700 mb-1">State *</label>
+                <select
+                  name="state"
+                  value={formData.state}
+                  onChange={handleChange}
+                  required
+                  className="w-full px-3 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-indigo-500 text-sm outline-none bg-white"
+                >
+                  {STATES.map(state => <option key={state} value={state}>{state}</option>)}
+                </select>
+                <p className="mt-1 text-[11px] text-slate-500">Used to tailor fee and submission guidance.</p>
+              </div>
+              <div>
               <label className="block text-xs font-semibold text-slate-700 mb-1">Mobile Number *</label>
               <input
                 type="text"
@@ -798,7 +868,7 @@ const handleSubmit = async (e) => {
                 {loading ? (
                   <>
                     <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
-                    <span>{t.loadingText}</span>
+                    <span>{['Reading your situation...', 'Matching the public authority...', 'Preparing your RTI draft...'][loadingStage]}</span>
                   </>
                 ) : (
                   <span>{t.submitButton}</span>
@@ -820,6 +890,32 @@ const handleSubmit = async (e) => {
               🏠 Home
             </button>
           </div>
+
+          {result && (
+            <div className="mb-8 grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm md:col-span-2">
+                <p className="text-[11px] uppercase tracking-wide font-bold text-indigo-600 mb-2">Routing recommendation</p>
+                <h2 className="text-lg font-bold text-slate-900">{result.department || 'Public authority to verify'}</h2>
+                <p className="mt-1 text-sm text-slate-600">{result.public_authority || 'Review the generated draft before filing.'}</p>
+                <p className="mt-2 text-xs text-slate-500">PIO: {result.pio || 'Public Information Officer of the selected authority'}</p>
+                <div className="mt-4 flex items-center gap-3">
+                  <span className="text-xs font-semibold text-slate-600">Match confidence</span>
+                  <div className="h-2 flex-1 max-w-xs rounded-full bg-slate-100 overflow-hidden"><div className="h-full bg-emerald-500" style={{ width: `${Math.round((result.confidence || 0) * 100)}%` }}></div></div>
+                  <span className="text-xs font-bold text-emerald-700">{Math.round((result.confidence || 0) * 100)}%</span>
+                </div>
+                <p className="mt-2 text-[11px] text-slate-500">Confirm this recommendation on the official portal before submitting.</p>
+              </div>
+              <div className="bg-slate-900 rounded-2xl p-5 text-white shadow-sm">
+                <p className="text-[11px] uppercase tracking-wide font-bold text-indigo-300 mb-2">Filing tracker</p>
+                <select value={filingStatus} onChange={e => { setFilingStatus(e.target.value); if (e.target.value === 'Filed') setFiledAt(new Date().toISOString()); }} className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white">
+                  {(result.status_options || ['Draft', 'Filed', 'Awaiting Response', 'Appealed', 'Resolved']).map(status => <option key={status}>{status}</option>)}
+                </select>
+                {filedAt && <p className="mt-3 text-xs text-slate-300">Response window: 30 days from filing.</p>}
+                {filedAt && <p className="mt-1 text-sm font-bold text-white">Due {new Date(new Date(filedAt).getTime() + 30 * 86400000).toLocaleDateString()}</p>}
+                <p className="mt-3 text-[11px] text-slate-400">No response by day 30? Consider a First Appeal under Section 19(1).</p>
+              </div>
+            </div>
+          )}
 
           <div className="grid lg:grid-cols-2 gap-8">
             {/* RTI Draft Section */}

@@ -12,20 +12,36 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+STATE_CONFIG = {
+    "Tamil Nadu": {"fee": "₹10 online fee; BPL applicants are exempt with valid proof.", "portal": "rtionline.gov.in"},
+    "Karnataka": {"fee": "₹10 application fee; confirm the accepted payment method with the public authority.", "portal": "karnataka.gov.in"},
+    "Maharashtra": {"fee": "₹10 application fee; confirm the accepted payment method with the public authority.", "portal": "rtionline.gov.in"},
+    "Delhi": {"fee": "₹10 application fee through the applicable online or postal channel.", "portal": "rtionline.gov.in"},
+    "Kerala": {"fee": "₹10 application fee; confirm the accepted payment method with the public authority.", "portal": "kerala.gov.in"},
+    "Other state": {"fee": "Confirm the application fee and accepted payment method with the selected public authority.", "portal": "the relevant state government portal"},
+}
+
+def detect_state(data: dict, city: str):
+    state = (data.get("state") or "").strip()
+    if state in STATE_CONFIG:
+        return state
+    city_state_map = {"chennai": "Tamil Nadu", "coimbatore": "Tamil Nadu", "bengaluru": "Karnataka", "bangalore": "Karnataka", "mumbai": "Maharashtra", "pune": "Maharashtra", "delhi": "Delhi", "kochi": "Kerala"}
+    return city_state_map.get(city.lower(), "Tamil Nadu")
+
 def get_smart_department_routing(problem: str, city: str):
     p = problem.lower()
     if any(k in p for k in ["ration", "food", "pds", "rice", "wheat"]):
-        return "Department of Civil Supplies and Consumer Protection", "State Civil Supplies Corporation"
+        return "Department of Civil Supplies and Consumer Protection", "State Civil Supplies Corporation", "Public Information Officer, Civil Supplies Department", 0.94
     elif any(k in p for k in ["road", "pothole", "street light", "drainage", "garbage", "water"]):
-        return "Housing and Urban Affairs Ministry", f"Corporation of {city} (CCMC / Municipal Body)"
+        return "Housing and Urban Affairs Ministry", f"Corporation of {city} (Municipal Body)", f"Public Information Officer, Corporation of {city}", 0.91
     elif any(k in p for k in ["police", "fir", "crime", "station", "complaint"]):
-        return "Ministry of Home Affairs / State Police Department", f"Office of the Commissioner of Police, {city}"
+        return "Ministry of Home Affairs / State Police Department", f"Office of the Commissioner of Police, {city}", f"Public Information Officer, Police Department, {city}", 0.89
     elif any(k in p for k in ["electricity", "power", "bill", "transformer"]):
-        return "Ministry of Power", f"State Electricity Board (DISCOM) - {city}"
+        return "Ministry of Power", f"State Electricity Board (DISCOM) - {city}", f"Public Information Officer, State DISCOM, {city}", 0.88
     elif any(k in p for k in ["college", "university", "exam", "certificate", "degree", "marksheet"]):
-        return "Department of Higher Education", "Directorate of Technical Education / University Registrar"
+        return "Department of Higher Education", "Directorate of Technical Education / University Registrar", "Public Information Officer, Education Department / University", 0.86
     else:
-        return "Ministry of Personnel, Public Grievances and Pensions", f"District Collectorate / Public Authority, {city}"
+        return "Ministry of Personnel, Public Grievances and Pensions", f"District Collectorate / Public Authority, {city}", f"Public Information Officer, District Collectorate, {city}", 0.62
 
 # Comprehensive localization templates for all 22 official scheduled languages of India
 INSTRUCTIONS_DB = {
@@ -277,7 +293,7 @@ async def health():
 @app.post("/generate-rti")
 async def generate_rti(data: dict):
     try:
-        full_name = data.get("fullName") or data.get("name") or "DEEPAN RAJU U"
+        full_name = data.get("fullName") or data.get("name") or "Applicant Name"
         address = data.get("address") or data.get("correspondenceAddress") or "33"
         city = data.get("city") or data.get("district") or "Chennai"
         pincode = data.get("pincode") or "600001"
@@ -285,9 +301,11 @@ async def generate_rti(data: dict):
         phone = data.get("phone") or "+91 9876543210"
         email = data.get("email") or "applicant@gmail.com"
         language = data.get("language") or "English"
+        state = detect_state(data, city)
+        state_config = STATE_CONFIG[state]
 
         current_date = datetime.now().strftime("%d-%m-%Y")
-        ministry, public_authority = get_smart_department_routing(problem, city)
+        ministry, public_authority, pio, confidence = get_smart_department_routing(problem, city)
 
         rti_draft = f"""ADDRESSEE
 To,
@@ -297,7 +315,7 @@ The Public Information Officer (PIO),
 {city} – {pincode}
 
 SUBJECT LINE
-Subject: Application under the Right to Information Act, 2005 — Request regarding {problem[:50]}...
+Subject: Application under Section 6(1) of the Right to Information Act, 2005 — Request regarding {problem[:50]}...
 
 APPLICANT DETAILS
 --------------------------------------------------------------------------------
@@ -322,7 +340,7 @@ I, {full_name}, a citizen of India, hereby seek the following information under 
 
 FEE DETAILS
 --------------------------------------------------------------------------------
-Application fee of ₹10/- paid via Online Payment / Indian Postal Order / Court Fee Stamp. (BPL card holders are exempt from fee.)
+{state_config['fee']} Payment channel: verify the current instructions on {state_config['portal']} or with the public authority. (BPL applicants may be exempt with valid proof.)
 --------------------------------------------------------------------------------
 
 DECLARATION
@@ -355,7 +373,16 @@ Date: {current_date}
         return {
             "rti_dr": rti_draft, # keeping key matching
             "rti_draft": rti_draft,
-            "instructions": instructions
+            "instructions": instructions.replace("State: Tamil Nadu", f"State: {state}").replace("₹10", state_config["fee"].split(";")[0]),
+            "department": ministry,
+            "public_authority": public_authority,
+            "pio": pio,
+            "confidence": confidence,
+            "state": state,
+            "fee_instructions": state_config["fee"],
+            "appeal_info": "No response within 30 days: consider a First Appeal under Section 19(1). A Second Appeal may be filed under Section 19(3) if required.",
+            "response_due_days": 30,
+            "status_options": ["Draft", "Filed", "Awaiting Response", "Appealed", "Resolved"]
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

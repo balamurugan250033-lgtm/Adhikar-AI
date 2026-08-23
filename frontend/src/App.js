@@ -465,7 +465,13 @@ export default function App() {
   const [appealDraft, setAppealDraft] = useState('');
   const [loadingStage, setLoadingStage] = useState(0);
   const [highContrast, setHighContrast] = useState(false);
-  const [darkMode, setDarkMode] = useState(() => localStorage.getItem('adhikar_theme') === 'dark');
+  const [darkMode, setDarkMode] = useState(() => {
+    const saved = localStorage.getItem('adhikar_theme');
+    if (saved !== null) {
+      return saved === 'dark';
+    }
+    return typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  });
 
   const t = UI_TEXT[language] || UI_TEXT['English'];
   const cleanLabel = (label) => label.replace(/^[^\p{L}\p{N}]+/u, '').trim();
@@ -497,6 +503,23 @@ export default function App() {
 
   useEffect(() => {
     localStorage.setItem('adhikar_theme', darkMode ? 'dark' : 'light');
+    if (darkMode) {
+      document.documentElement.classList.add('dark');
+      document.documentElement.classList.add('dark-mode');
+      if (document.body) document.body.classList.add('dark-mode');
+    } else {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.remove('dark-mode');
+      if (document.body) document.body.classList.remove('dark-mode');
+    }
+
+    let metaThemeColor = document.querySelector('meta[name="theme-color"]');
+    if (!metaThemeColor) {
+      metaThemeColor = document.createElement('meta');
+      metaThemeColor.name = 'theme-color';
+      document.head.appendChild(metaThemeColor);
+    }
+    metaThemeColor.setAttribute('content', darkMode ? '#090d16' : '#ffffff');
   }, [darkMode]);
 
   const handleChange = (e) => {
@@ -715,7 +738,7 @@ const handleSubmit = async (e, submissionData = formData) => {
   const resolvedDraft = cleanDraftText(result?.rti_draft || result?.draft || result?.text || result?.application || result?.response || '');
 
   return (
-    <div className={`min-h-screen bg-slate-50 text-slate-900 font-sans ${highContrast ? 'high-contrast' : ''} ${darkMode ? 'dark-mode' : ''}`}>
+    <div className={`min-h-screen bg-slate-50 text-slate-900 font-sans transition-colors duration-200 ${highContrast ? 'high-contrast' : ''} ${darkMode ? 'dark dark-mode' : ''}`}>
       <a href="#main-content" className="skip-link">Skip to content</a>
       <div className="utility-bar">
         <div className="utility-inner">

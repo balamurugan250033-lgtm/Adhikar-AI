@@ -1,10 +1,10 @@
-# Adhikar AI
+# Vigrah AI
 
 > Make public services easier to understand, access, and follow up.
 
-Adhikar AI is a citizen-support application for preparing clear Right to Information (RTI) applications and discovering relevant public-service guidance. It combines a React interface with a FastAPI backend and supports multilingual workflows for citizens in India.
+Vigrah AI is a citizen-support application for preparing clear Right to Information (RTI) applications and discovering relevant public-service guidance. It combines a React interface with a FastAPI backend and supports multilingual workflows for citizens in India.
 
-Adhikar AI is an independent informational tool. It is not a Government of India website, does not submit applications on a citizen's behalf, and does not replace official instructions or legal advice. Always verify details on the relevant government portal before submitting.
+Vigrah AI is an independent informational tool. It is not a Government of India website, does not submit applications on a citizen's behalf, and does not replace official instructions or legal advice. Always verify details on the relevant government portal before submitting.
 
 ## Live Links
 
@@ -73,7 +73,7 @@ From the repository root, run `frontend\start.bat` to launch both services in se
 
 ### Deploy on Vercel
 
-Import the GitHub repository root (`Adhikar-AI`) as the Vercel project. Leave **Root Directory** blank; do not select `frontend` as the project root. The root `vercel.json`, `api/index.py`, and `requirements.txt` configure the React build and FastAPI serverless function together. After deployment, verify `https://your-domain.vercel.app/api/health` returns JSON with `status: online`.
+Import the GitHub repository root (`Vigrah-AI`) as the Vercel project. Leave **Root Directory** blank; do not select `frontend` as the project root. The root `vercel.json`, `api/index.py`, and `requirements.txt` configure the React build and FastAPI serverless function together. After deployment, verify `https://your-domain.vercel.app/api/health` returns JSON with `status: online`.
 
 ## API Surface
 
@@ -89,7 +89,7 @@ Use the interactive documentation at `/docs` for request schemas and testing.
 ## Project Structure
 
 ```text
-Adhikar-AI/
+Vigrah-AI/
 ├── backend/
 │   └── app/
 │       └── main.py          # FastAPI application and API routes
@@ -122,7 +122,7 @@ npm test
 - Keep secrets in environment variables or a local secret manager.
 - Draft history is stored in the user's browser and is not a server-side case-management system.
 - Review generated content before submitting it to an official portal.
-- Adhikar AI provides informational assistance and does not replace legal advice or official government guidance.
+- Vigrah AI provides informational assistance and does not replace legal advice or official government guidance.
 
 ## License
 

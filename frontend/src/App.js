@@ -488,8 +488,30 @@ export default function App() {
     const savedHistory = localStorage.getItem('vigrah_rti_history');
     if (savedHistory) {
       try {
-        const parsedHistory = JSON.parse(savedHistory);
-        setHistory(Array.isArray(parsedHistory) && parsedHistory.length ? parsedHistory : DEMO_HISTORY);
+        let parsedHistory = JSON.parse(savedHistory);
+        if (Array.isArray(parsedHistory) && parsedHistory.length) {
+          // Deduplicate based on name, city, and date
+          const seen = new Set();
+          let deduplicatedHistory = parsedHistory.filter(item => {
+            if (item.demo) return true;
+            const key = `${item.applicant_name}-${item.city}-${item.date}`;
+            if (seen.has(key)) return false;
+            seen.add(key);
+            return true;
+          });
+          
+          // Limit real drafts to 5, append demo drafts
+          const realDrafts = deduplicatedHistory.filter(item => !item.demo).slice(0, 5);
+          const demoDrafts = deduplicatedHistory.filter(item => item.demo);
+          const finalHistory = [...realDrafts, ...demoDrafts];
+          
+          setHistory(finalHistory);
+          if (finalHistory.length !== parsedHistory.length) {
+            localStorage.setItem('vigrah_rti_history', JSON.stringify(finalHistory));
+          }
+        } else {
+          setHistory(DEMO_HISTORY);
+        }
       } catch (e) {
         console.error("Failed to parse history", e);
         setHistory(DEMO_HISTORY);
@@ -598,7 +620,20 @@ const handleSubmit = async (e, submissionData = formData) => {
         date: new Date().toLocaleDateString()
       };
 
-      const updatedHistory = [newEntry, ...history];
+      // Deduplicate when adding a new draft
+      const seen = new Set([`${newEntry.applicant_name}-${newEntry.city}-${newEntry.date}`]);
+      const deduplicatedHistory = history.filter(item => {
+        if (item.demo) return true;
+        const key = `${item.applicant_name}-${item.city}-${item.date}`;
+        if (seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      });
+
+      const realDrafts = [newEntry, ...deduplicatedHistory.filter(item => !item.demo)].slice(0, 5);
+      const demoDrafts = deduplicatedHistory.filter(item => item.demo);
+      const updatedHistory = [...realDrafts, ...demoDrafts];
+
       setHistory(updatedHistory);
       setDraftId(newDraftId);
       localStorage.setItem('vigrah_rti_history', JSON.stringify(updatedHistory));

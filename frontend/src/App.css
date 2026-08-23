@@ -585,29 +585,27 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   position: relative;
   display: block;
   overflow: hidden;
-  padding: 0.65rem 0;
+  padding: 0.75rem 1rem;
   background: #eef3f8;
   color: var(--civic-navy);
   border-bottom: 1px solid var(--civic-line);
   font-size: 0.8rem;
   min-width: 0;
+  text-align: center;
 }
 
 .trust-ticker {
   display: inline-flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 0.6rem;
-  min-width: max-content;
-  padding-left: 100%;
-  animation: civic-ticker 28s linear infinite;
+  max-width: 1200px;
+  margin: 0 auto;
+  line-height: 1.4;
 }
 
-.trust-banner:hover .trust-ticker,
-.trust-banner:focus-within .trust-ticker { animation-play-state: paused; }
-
-@keyframes civic-ticker {
-  from { transform: translateX(0); }
-  to { transform: translateX(-100%); }
+.trust-ticker svg {
+  flex-shrink: 0;
+  margin-top: 2px;
 }
 
 .header-inner, .brand-lockup {
@@ -1556,8 +1554,46 @@ html.dark-mode body {
   color: #93c5fd !important;
 }
 
-.dark-mode .site-footer p {
-  color: #64748b !important;
+.dark-mode .site-footer p,
+.dark-mode .landing-footer p {
+  color: #94a3b8 !important;
+}
+
+.dark-mode .how-section .section-label {
+  color: #818cf8 !important;
+}
+
+.dark-mode .how-section .section-title {
+  color: #f8fafc !important;
+}
+
+.dark-mode .step-num {
+  color: #1e293b !important;
+}
+
+.dark-mode .step h3 {
+  color: #f1f5f9 !important;
+}
+
+.dark-mode .step p {
+  color: #cbd5e1 !important;
+}
+
+.dark-mode .step-arrow {
+  color: #475569 !important;
+}
+
+.dark-mode .cta-section {
+  background: #0f172a !important;
+  border-top: 1px solid #1e293b;
+}
+
+.dark-mode .cta-section h2 {
+  color: #f8fafc !important;
+}
+
+.dark-mode .cta-section p {
+  color: #94a3b8 !important;
 }
 
 /* ==========================================================================
@@ -1576,12 +1612,8 @@ html.dark-mode body {
   .brand-lockup .text-\[10px\] { display: none; }
   .header-inner > div:last-child { gap: 0.5rem; }
   .header-inner select { max-width: 7.2rem; padding: 0.45rem; font-size: 0.75rem; }
-  .trust-banner { padding-inline: 0; text-align: left; }
+  .trust-banner { padding: 0.75rem 1rem; text-align: left; }
   .site-footer { padding: 1.5rem 1rem; }
   .civic-overview { padding: 1.5rem 1rem; }
   .overview-grid { grid-template-columns: 1fr; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .trust-ticker { animation: none; padding-left: 1rem; }
 }

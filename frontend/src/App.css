@@ -523,6 +523,12 @@ body {
   overflow-x: hidden;
 }
 
+html, #root, .min-h-screen {
+  width: 100%;
+  max-width: 100vw;
+  min-width: 0;
+}
+
 h1, h2, h3 {
   font-family: Georgia, "Times New Roman", serif;
   letter-spacing: 0;
@@ -550,6 +556,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   display: flex;
   justify-content: space-between;
   gap: 1rem;
+  min-width: 0;
 }
 
 .utility-inner span, .utility-actions, .utility-actions button, .trust-banner, .btn-primary, .feature-link, .document-kicker, .site-footer nav a {
@@ -577,7 +584,16 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   border-bottom: 1px solid var(--civic-line);
   font-size: 0.8rem;
   text-align: center;
+  min-width: 0;
 }
+
+.trust-banner span { min-width: 0; }
+
+.header-inner, .brand-lockup {
+  min-width: 0;
+}
+
+.brand-lockup > div { min-width: 0; }
 
 .trust-banner::after {
   content: "";
@@ -643,7 +659,16 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 
 @media (max-width: 640px) {
   .utility-inner { padding-inline: 1rem; }
-  .utility-inner > span { max-width: 12rem; }
+  .utility-inner > span { max-width: 10rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .utility-actions { gap: 0.6rem; white-space: nowrap; }
+  .utility-actions > span { display: none; }
+  .header-inner { padding-inline: 1rem; }
+  .brand-logo { width: 3.5rem !important; height: 3.5rem !important; }
+  .brand-lockup { gap: 0.5rem !important; }
+  .brand-lockup .text-lg { font-size: 0.95rem; }
+  .brand-lockup .text-\[10px\] { display: none; }
+  .header-inner > div:last-child { gap: 0.5rem; }
+  .header-inner select { max-width: 7.2rem; padding: 0.45rem; font-size: 0.75rem; }
   .trust-banner { padding-inline: 1rem; text-align: left; align-items: flex-start; }
   .site-footer { padding: 1.5rem 1rem; }
 }

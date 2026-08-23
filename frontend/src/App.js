@@ -675,9 +675,9 @@ const handleSubmit = async (e, submissionData = formData) => {
       </div>
       {/* Header */}
       <header className="border-b border-slate-200 bg-white sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-          <div className="flex items-center space-x-3 cursor-pointer" onClick={() => setStep('landing')}>
-            <img src={logo} alt="Adhikar AI Logo" className="w-24 h-28 object-contain rounded-xl" />
+        <div className="header-inner max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+          <div className="brand-lockup flex items-center space-x-3 cursor-pointer" onClick={() => setStep('landing')}>
+            <img src={logo} alt="Adhikar AI Logo" className="brand-logo w-24 h-28 object-contain rounded-xl" />
             <div>
               <span className="font-bold text-lg text-slate-900 tracking-tight">{t.brand}</span>
               <span className="block text-[10px] text-indigo-600 font-semibold uppercase tracking-wider">{t.tagline}</span>
@@ -716,7 +716,7 @@ const handleSubmit = async (e, submissionData = formData) => {
           <div className="grid lg:grid-cols-12 gap-12 items-center">
             <div className="lg:col-span-7 space-y-6">
               <span className="inline-block max-w-full px-3 py-1 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-700 text-xs font-bold tracking-wide uppercase">
-                🇮🇳 Citizen support for RTI and public services
+                Citizen support for RTI and public services
               </span>
               <h1 className="max-w-4xl break-words text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
                 {t.heroTitle}

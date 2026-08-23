@@ -4,7 +4,7 @@
 
 Vigrah AI is a citizen-support application for preparing clear Right to Information (RTI) applications and discovering relevant public-service guidance. It combines a React interface with a FastAPI backend and supports multilingual workflows for citizens in India.
 
-Vigrah AI is an independent informational tool. It is not a Government of India website, does not submit applications on a citizen's behalf, and does not replace official instructions or legal advice. Always verify details on the relevant government portal before submitting.
+> **Disclaimer:** Vigrah AI is an independent informational tool. It is not a Government of India website, does not submit applications on a citizen's behalf, and does not replace official instructions or legal advice. Always verify details on the relevant government portal before submitting.
 
 ## Live Links
 
@@ -17,7 +17,7 @@ Vigrah AI is an independent informational tool. It is not a Government of India 
 ## Screenshots
 
 <p align="center">
-  <b>Home (light and dark)</b><br>
+  <b>Home dashboard (light and dark mode)</b><br>
   <img src="docs/screenshots/home-light.png" alt="Vigrah AI home in light mode" width="48%" />
   <img src="docs/screenshots/home-dark.png" alt="Vigrah AI home in dark mode" width="48%" />
 </p>
@@ -29,13 +29,13 @@ Vigrah AI is an independent informational tool. It is not a Government of India 
 
 ## What It Does
 
-- Generates structured RTI application drafts from a citizen's issue.
-- Routes common problems toward a likely ministry or public authority.
-- Provides submission guidance and next steps after drafting.
-- Supports English and India's scheduled-language workflows.
-- Offers voice input where the browser supports Speech Recognition.
-- Stores draft history locally in the browser for convenient follow-up.
-- Includes public-service rights and government-scheme tools.
+- **Automated RTI drafting:** Generates structured RTI application drafts from a citizen's issue.
+- **Smart routing:** Routes common problems toward a likely ministry or public authority.
+- **Submission guidance:** Provides submission guidance and next steps after drafting.
+- **Multilingual workflows:** Supports English and India's scheduled-language workflows.
+- **Voice input:** Offers voice input where the browser supports Speech Recognition.
+- **Local persistence:** Stores draft history locally in the browser for convenient follow-up.
+- **Rights and schemes:** Includes public-service rights and government-scheme tools.
 
 ## Technology
 

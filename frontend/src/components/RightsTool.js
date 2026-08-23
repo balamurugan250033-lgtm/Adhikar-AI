@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { apiUrl } from '../api';
 
 const LANG_MAP = { en: 'English', hi: 'Hindi', ta: 'Tamil', te: 'Telugu', bn: 'Bengali' };
 
@@ -27,7 +28,7 @@ export default function RightsTool({ language }) {
     setLoading(true);
     setOutput('');
     try {
-      const res = await axios.post('http://localhost:8000/api/rights/navigate', {
+      const res = await axios.post(apiUrl('/api/rights/navigate'), {
         problem,
         language: LANG_MAP[language] || 'English'
       });

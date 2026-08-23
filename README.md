@@ -4,6 +4,8 @@
 
 Adhikar AI is a citizen-support application for preparing clear Right to Information (RTI) applications and discovering relevant public-service guidance. It combines a React interface with a FastAPI backend and supports multilingual workflows for citizens in India.
 
+Adhikar AI is an independent informational tool. It is not a Government of India website, does not submit applications on a citizen's behalf, and does not replace official instructions or legal advice. Always verify details on the relevant government portal before submitting.
+
 ## Live Links
 
 - **Repository:** [github.com/balamurugan250033-lgtm/Adhikar-AI](https://github.com/balamurugan250033-lgtm/Adhikar-AI)
@@ -61,6 +63,8 @@ npm start
 ```
 
 Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+The frontend proxies `/api` requests to the local backend. On Vercel, the included `api/index.py` serverless entry point serves the same API routes from the same deployment.
 
 ### Windows shortcut
 

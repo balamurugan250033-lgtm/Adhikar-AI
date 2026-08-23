@@ -270,6 +270,10 @@ def get_fallback_instructions(language: str, m: str, pa: str):
 async def root():
     return {"status": "online", "message": "Adhikar AI All 22 Indian Languages Active"}
 
+@app.get("/api/health")
+async def health():
+    return {"status": "online", "service": "Adhikar AI API"}
+
 @app.post("/generate-rti")
 async def generate_rti(data: dict):
     try:
@@ -355,3 +359,25 @@ Date: {current_date}
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/api/rti/draft")
+async def generate_rti_draft(data: dict):
+    return await generate_rti(data)
+
+@app.post("/api/rights/navigate")
+async def navigate_rights(data: dict):
+    problem = (data.get("problem") or "").strip()
+    if not problem:
+        raise HTTPException(status_code=400, detail="Please describe the problem.")
+
+    topic = problem.lower()
+    if any(word in topic for word in ("consumer", "refund", "fraud", "product")):
+        guidance = "Consumer Protection: preserve bills, messages, and payment records. Submit a complaint through the National Consumer Helpline at consumerhelpline.gov.in or call 1915."
+    elif any(word in topic for word in ("salary", "employer", "workplace", "termination", "wage")):
+        guidance = "Employment issue: keep your appointment letter, payslips, and written communication. Contact your State Labour Department or the SAMADHAN portal at samadhan.labour.gov.in."
+    elif any(word in topic for word in ("landlord", "rent", "tenant", "deposit")):
+        guidance = "Tenancy issue: keep the rent agreement, receipts, notices, and photographs. Check your State Rent Authority or District Legal Services Authority for the correct remedy."
+    else:
+        guidance = "Start by collecting documents, dates, reference numbers, and written replies. You can request records through RTI and contact your District Legal Services Authority for free legal-aid eligibility."
+
+    return {"result": f"General information, not legal advice.\n\n{guidance}\n\nNext step: verify the current procedure on the linked official portal or with the relevant public authority before acting."}

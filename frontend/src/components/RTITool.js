@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { apiUrl } from '../api';
 
 export default function RTITool() {
   const [formData, setFormData] = useState({
@@ -29,7 +30,7 @@ export default function RTITool() {
     setLoading(true);
 
     try {
-      const response = await fetch('http://localhost:8000/api/rti/draft', {
+      const response = await fetch(apiUrl('/api/rti/draft'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),

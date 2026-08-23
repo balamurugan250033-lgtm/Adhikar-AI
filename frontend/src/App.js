@@ -1,5 +1,6 @@
 import logo from './logo.png';
 import React, { useState, useEffect } from 'react';
+import { apiUrl } from './api';
 
 // 22 Official Indian Languages + English with Speech recognition locale codes
 const LANGUAGES = [
@@ -72,8 +73,8 @@ const UI_TEXT = {
     heroDesc: "உங்கள் பிரச்சினையை எந்த மொழியிலும் விவரிக்கவும். எங்களின் AI உங்கள் விண்ணப்பத்தை ஆங்கிலத்தில் தயார் செய்து வழிகாட்டும்.",
     getStarted: "தொடங்கவும் →", formTitle: "RTI விண்ணப்பத்தை உருவாக்கவும்",
     nameLabel: "விண்ணப்பதாரரின் முழு பெயர்", namePlaceholder: "உங்கள் முழு சட்டப்பூர்வ பெயரை உள்ளிடவும்",
-    addressLabel: "தொடர்பு முகவரி", namePlaceholder: "உங்கள் முழு அஞ்சல் முகவரியை உள்ளிடவும்",
-    cityLabel: "நகரம் / மாவட்டம்", namePlaceholder: "உங்கள் நகரம் அல்லது மாவட்டத்தை உள்ளிடவும்",
+    addressLabel: "தொடர்பு முகவரி", addressPlaceholder: "உங்கள் முழு அஞ்சல் முகவரியை உள்ளிடவும்",
+    cityLabel: "நகரம் / மாவட்டம்", cityPlaceholder: "உங்கள் நகரம் அல்லது மாவட்டத்தை உள்ளிடவும்",
     pincodeLabel: "அஞ்சல் குறியீடு (Pincode)", pincodePlaceholder: "6 இலக்க அஞ்சல் குறியீட்டை உள்ளிடவும்",
     problemLabel: "உங்கள் சிக்கல் அல்லது தேவையான தகவலை விவரிக்கவும்",
     problemPlaceholder: "உங்கள் பிரச்சினையை தெளிவாக விவரிக்கவும்...",
@@ -202,7 +203,7 @@ const UI_TEXT = {
     heroDesc: "ଯେକୌଣସି ଭାଷାରେ ଆପଣଙ୍କ ସମସ୍ୟା ବର୍ଣ୍ଣନା କରନ୍ତୁ। ଆମର AI ଇଂରାଜୀରେ ଆବେଦନ ପ୍ରସ୍ତୁତ କରିବ।",
     getStarted: "ଆରମ୍ଭ କରନ୍ତୁ →", formTitle: "RTI ଆବେଦନ ସୃଷ୍ଟି କରନ୍ତୁ",
     nameLabel: "ଆବେଦନକାରୀଙ୍କ ପୂର୍ଣ୍ଣ ନାମ", namePlaceholder: "ଆପଣଙ୍କ ପୂର୍ଣ୍ଣ ନାମ ପ୍ରବେଶ କରନ୍ତୁ",
-    addressLabel: "ପତ୍ରାଳୟ ଠିକଣା", namePlaceholder: "ସମ୍ପୂର୍ଣ୍ଣ ଠିକଣା ପ୍ରବେଶ କରନ୍ତୁ",
+    addressLabel: "ପତ୍ରାଳୟ ଠିକଣା", addressPlaceholder: "ସମ୍ପୂର୍ଣ୍ଣ ଠିକଣା ପ୍ରବେଶ କରନ୍ତୁ",
     cityLabel: "ସହର / ଜିଲ୍ଲା", cityPlaceholder: "ଆପଣଙ୍କ ସହର ବା ଜିଲ୍ଲା ପ୍ରବେଶ କରନ୍ତୁ",
     pincodeLabel: "ପିନକୋଡ୍", pincodePlaceholder: "6-ଅଙ୍କ ବିଶିଷ୍ଟ ପିନକୋଡ୍ ପ୍ରବେଶ କରନ୍ତୁ",
     problemLabel: "ଆପଣଙ୍କ ସମସ୍ୟା ବର୍ଣ୍ଣନା କରନ୍ତୁ", problemPlaceholder: "ଆପଣଙ୍କ ସମସ୍ୟା ସ୍ପଷ୍ଟ ଭାବରେ ବର୍ଣ୍ଣନା କରନ୍ତୁ...",
@@ -266,9 +267,9 @@ const UI_TEXT = {
     heroDesc: "कस्यामपि भाषायां स्वसमस्यां वदन्तु। अस्माकं AI आङ्ग्लभाषया आवेदनं रचयिष्यति।",
     getStarted: "प्रारभ्यताम् →", formTitle: "RTI-आवेदनं रचयन्तु",
     nameLabel: "वेदकस्य पूर्णं नाम", namePlaceholder: "पूर्णं नाम लिखन्तु",
-    addressLabel: "पत्राचार-सङ्केतः", namePlaceholder: "पूर्णं सङ्केतं लिखन्तु",
-    cityLabel: "नगरम् / जनपदम्", namePlaceholder: "नगरस्य नाम लिखन्तु",
-    pincodeLabel: "पिन्-सङ्केतः", namePlaceholder: "६-अङ्कीय पिन्-सङ्केतं लिखन्तु",
+    addressLabel: "पत्राचार-सङ्केतः", addressPlaceholder: "पूर्णं सङ्केतं लिखन्तु",
+    cityLabel: "नगरम् / जनपदम्", cityPlaceholder: "नगरस्य नाम लिखन्तु",
+    pincodeLabel: "पिन्-सङ्केतः", pincodePlaceholder: "६-अङ्कीय पिन्-सङ्केतं लिखन्तु",
     problemLabel: "समस्यायाः विवरणं ददतु", problemPlaceholder: "स्पष्टतया समस्यां लिखन्तु...",
     micButton: "🎙️ वदन्तु", stopMic: "🔴 स्थगयन्तु",
     submitButton: "कार्यालयीय-RTI-आवेदनं जनरेंट कुर्वन्तु", loadingText: "डार्फ्ट रचयते...",
@@ -298,10 +299,10 @@ const UI_TEXT = {
     heroDesc: "پنهنجي مسئلي کي ڪنهن به ٻولي ۾ بيان ڪريو. اسان جو AI انگريزيءَ ۾ درخواست تيار ڪندو.",
     getStarted: "شروع ڪريو →", formTitle: "RTI درخواست ٺاهيو",
     nameLabel: "درخواست گذار جو پورو نالو", namePlaceholder: "پنهنجو پورو نالو داخل ڪريو",
-    addressLabel: "پتو", namePlaceholder: "پنهنجو پورو پتو داخل ڪريو",
+    addressLabel: "پتو", addressPlaceholder: "پنهنجو پورو پتو داخل ڪريو",
     cityLabel: "شهر / ضلعو", cityPlaceholder: "پنهنجو شهر يا ضلعو داخل ڪريو",
     pincodeLabel: "پنڪوڊ", pincodePlaceholder: "6-اکرن جو پنڪوڊ داخل ڪريو",
-    problemLabel: "پنهنجو مسئلو بيان ڪريو", namePlaceholder: "پنهنجو مسئلو واضح طور تي بيان ڪريو...",
+    problemLabel: "پنهنجو مسئلو بيان ڪريو", problemPlaceholder: "پنهنجو مسئلو واضح طور تي بيان ڪريو...",
     micButton: "🎙️ ڳالهايو", stopMic: "🔴 بند ڪريو",
     submitButton: "سرڪاري RTI درخواست پيدا ڪريو", loadingText: "ڊرافٽ تيار ٿي رهيو آهي...",
     sectionATitle: "تيار ڪيل RTI درخواست", copyBtn: "ڪاپي", copied: "✓ ڪاپي ٿي ويو", pdfBtn: "📥 PDF Download",
@@ -315,7 +316,7 @@ const UI_TEXT = {
     getStarted: "सुरू करा →", formTitle: "RTI अर्ज तयार करा",
     nameLabel: "अर्जदाराचें पुराय नांव", namePlaceholder: "तुमचें पुराय नांव घाला",
     addressLabel: "पत्ता", addressPlaceholder: "पुराय पत्ता घाला",
-    cityLabel: "शार / जिल्लो", namePlaceholder: "तुमचें शार वा जिल्लो घाला",
+    cityLabel: "शार / जिल्लो", cityPlaceholder: "तुमचें शार वा जिल्लो घाला",
     pincodeLabel: "पिनकोड", pincodePlaceholder: "६ अंकी पिनकोड घाला",
     problemLabel: "तुमची समस्या सांगा", problemPlaceholder: "तुमची समस्या स्पश्टपणान सांगा...",
     micButton: "🎙️ उलोवचें", stopMic: "🔴 बंद करचें",
@@ -417,6 +418,8 @@ export default function App() {
     address: '',
     city: '',
     pincode: '',
+    phone: '',
+    email: '',
     question: '',
   });
 
@@ -428,7 +431,7 @@ export default function App() {
   const t = UI_TEXT[language] || UI_TEXT['English'];
 
   useEffect(() => {
-    fetch('http://localhost:8000/')
+    fetch(apiUrl('/api/health'))
       .then(res => setApiOnline(res.ok))
       .catch(() => setApiOnline(false));
 
@@ -484,7 +487,7 @@ const handleSubmit = async (e) => {
     setLoading(true);
 
     try {
-      const response = await fetch('http://localhost:8000/generate-rti', {
+      const response = await fetch(apiUrl('/api/rti/draft'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...formData, language })

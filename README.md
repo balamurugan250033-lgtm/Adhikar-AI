@@ -140,4 +140,4 @@ npm test
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE).
+License information will be added when the project license is formalized..

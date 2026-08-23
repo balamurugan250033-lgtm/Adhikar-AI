@@ -432,6 +432,12 @@ const UI_TEXT = {
   }
 };
 
+function cleanDraftText(text) {
+  return (text || '')
+    .replace(/\nSUBMISSION NOTE\n[\s\S]*?\nDECLARATION\n/g, '\nDECLARATION\n')
+    .replace(/\nSubmission note:.*?(?=\nI hereby declare)/g, '');
+}
+
 export default function App() {
   const [step, setStep] = useState('landing');
   const [language, setLanguage] = useState('English');
@@ -553,7 +559,7 @@ const handleSubmit = async (e, submissionData = formData) => {
       const newEntry = {
         id: newDraftId,
         ...submissionData,
-        rti_draft: data.rti_draft || data.draft || data.text || JSON.stringify(data),
+        rti_draft: cleanDraftText(data.rti_draft || data.draft || data.text || JSON.stringify(data)),
         instructions: data.instructions || data.guidelines || data.steps || 'Follow standard portal guidelines.',
         department: data.department,
         public_authority: data.public_authority,
@@ -591,7 +597,7 @@ const handleSubmit = async (e, submissionData = formData) => {
   };
 
   const handleCopy = () => {
-    const textToCopy = result?.rti_draft || result?.draft || result?.text || result?.application || result?.response || '';
+    const textToCopy = cleanDraftText(result?.rti_draft || result?.draft || result?.text || result?.application || result?.response || '');
     if (textToCopy) {
       navigator.clipboard.writeText(textToCopy);
       setCopied(true);
@@ -600,7 +606,7 @@ const handleSubmit = async (e, submissionData = formData) => {
   };
 
   const handleDownloadPDF = () => {
-    const textToPrint = result?.rti_draft || result?.draft || result?.text || result?.application || result?.response || '';
+    const textToPrint = cleanDraftText(result?.rti_draft || result?.draft || result?.text || result?.application || result?.response || '');
     if (!textToPrint) return;
     
     const printWindow = window.open('', '_blank');
@@ -656,7 +662,7 @@ const handleSubmit = async (e, submissionData = formData) => {
       question: item.question || ''
     });
     setResult({
-      rti_draft: item.rti_draft,
+      rti_draft: cleanDraftText(item.rti_draft),
       instructions: item.instructions,
       department: item.department,
       public_authority: item.public_authority,
@@ -706,7 +712,7 @@ const handleSubmit = async (e, submissionData = formData) => {
     localStorage.setItem('adhikar_rti_history', JSON.stringify(updatedHistory));
   };
 
-  const resolvedDraft = result?.rti_draft || result?.draft || result?.text || result?.application || result?.response || '';
+  const resolvedDraft = cleanDraftText(result?.rti_draft || result?.draft || result?.text || result?.application || result?.response || '');
 
   return (
     <div className={`min-h-screen bg-slate-50 text-slate-900 font-sans ${highContrast ? 'high-contrast' : ''} ${darkMode ? 'dark-mode' : ''}`}>

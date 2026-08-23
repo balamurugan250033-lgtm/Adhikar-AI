@@ -956,6 +956,8 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .dark-mode header { background: #172033 !important; border-color: #334155 !important; }
 .dark-mode .clear-history { color: #cbd5e1; }
 .dark-mode .delete-draft { background: #1e293b; border-color: #64748b; color: #e2e8f0; }
+.dark-mode button.bg-slate-100 { background: #1e293b !important; color: #f1f5f9 !important; }
+.dark-mode .guidance-link { background: #1e293b; color: #f1f5f9; border-color: #64748b; }
 .dark-mode .official-document { color: #e2e8f0 !important; }
 .dark-mode .document-kicker { color: #bfdbfe; border-color: #64748b; }
 .dark-mode .submission-detail { border-color: #334155; }

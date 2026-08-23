@@ -825,10 +825,25 @@ const handleSubmit = async (e, submissionData = formData) => {
         </div>
       </header>
 
-      <div className="trust-banner" role="note">
+      <div className="trust-banner" role="marquee" aria-label="Important notices">
         <div className="trust-ticker">
-          <ShieldCheck size={17} aria-hidden="true" />
-          <span><strong>Important:</strong> Vigrah AI is an independent citizen-assistance tool, not affiliated with, endorsed by, or operated by the Government of India. Verify details on official portals before filing.</span>
+          {[
+            { icon: <ShieldCheck size={15} aria-hidden="true" />, text: <><strong>Important:</strong> Vigrah AI is not affiliated with the Government of India. Verify details on official portals before filing.</> },
+            { icon: <Info size={15} aria-hidden="true" />, text: <><strong>RTI Act 2005:</strong> Every citizen has the right to request information from any public authority within 30 days.</> },
+            { icon: <Landmark size={15} aria-hidden="true" />, text: <><strong>Free Service:</strong> Vigrah AI is completely free to use. No registration required to draft your RTI application.</> },
+            { icon: <ShieldCheck size={15} aria-hidden="true" />, text: <><strong>Multilingual:</strong> Describe your problem in any of 22 Indian languages — we draft the RTI in English for you.</> },
+            { icon: <ClipboardCheck size={15} aria-hidden="true" />, text: <><strong>Tip:</strong> Attach relevant documents with your RTI application for faster processing by the Public Information Officer.</> },
+            { icon: <Info size={15} aria-hidden="true" />, text: <><strong>RTI Act 2005:</strong> Every citizen has the right to request information from any public authority within 30 days.</> },
+            { icon: <Landmark size={15} aria-hidden="true" />, text: <><strong>Free Service:</strong> Vigrah AI is completely free to use. No registration required to draft your RTI application.</> },
+            { icon: <ShieldCheck size={15} aria-hidden="true" />, text: <><strong>Multilingual:</strong> Describe your problem in any of 22 Indian languages — we draft the RTI in English for you.</> },
+            { icon: <ClipboardCheck size={15} aria-hidden="true" />, text: <><strong>Tip:</strong> Attach relevant documents with your RTI application for faster processing by the Public Information Officer.</> },
+            { icon: <ShieldCheck size={15} aria-hidden="true" />, text: <><strong>Important:</strong> Vigrah AI is not affiliated with the Government of India. Verify details on official portals before filing.</> },
+          ].map((item, i) => (
+            <span key={i} className="ticker-item">
+              {item.icon}
+              <span>{item.text}</span>
+            </span>
+          ))}
         </div>
       </div>
 

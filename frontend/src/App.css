@@ -585,27 +585,43 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   position: relative;
   display: block;
   overflow: hidden;
-  padding: 0.75rem 1rem;
+  padding: 0.6rem 0;
   background: #eef3f8;
   color: var(--civic-navy);
   border-bottom: 1px solid var(--civic-line);
   font-size: 0.8rem;
   min-width: 0;
-  text-align: center;
+  white-space: nowrap;
+}
+
+@keyframes ticker-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
 
 .trust-ticker {
   display: inline-flex;
-  align-items: flex-start;
-  gap: 0.6rem;
-  max-width: 1200px;
-  margin: 0 auto;
-  line-height: 1.4;
+  align-items: center;
+  gap: 0;
+  animation: ticker-scroll 35s linear infinite;
+  will-change: transform;
+}
+
+.trust-ticker:hover {
+  animation-play-state: paused;
+}
+
+.ticker-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0 2.5rem;
+  border-right: 1px solid #c8d8e8;
 }
 
 .trust-ticker svg {
   flex-shrink: 0;
-  margin-top: 2px;
+  color: #3d6b9e;
 }
 
 .header-inner, .brand-lockup {

@@ -45,6 +45,10 @@ const SAMPLE_FORM = {
   question: 'My ration card application has been pending for four months. Please provide the file status, reasons for delay, and action taken by the responsible officials.'
 };
 
+const EMPTY_FORM = {
+  applicant_name: '', address: '', city: '', pincode: '', state: 'Tamil Nadu', phone: '', email: '', question: ''
+};
+
 const DEMO_HISTORY = [
   { id: 'demo-1', demo: true, applicant_name: SAMPLE_FORM.applicant_name, address: SAMPLE_FORM.address, city: SAMPLE_FORM.city, pincode: SAMPLE_FORM.pincode, state: SAMPLE_FORM.state, phone: SAMPLE_FORM.phone, email: SAMPLE_FORM.email, language: 'English', date: 'Demo example', question: SAMPLE_FORM.question },
   { id: 'demo-2', demo: true, applicant_name: 'Ravi Nair', address: '44 MG Road', city: 'Bengaluru', pincode: '560001', state: 'Karnataka', phone: '9876543211', email: 'ravi@example.com', language: 'English', date: 'Demo example', question: 'The street lights on our road have not worked for three months. Please provide the complaint status, repair timeline, and responsible department records.' }
@@ -569,10 +573,14 @@ const handleSubmit = async (e, submissionData = formData) => {
     }
   };
 
-  const handleSample = () => {
-    setFormData(SAMPLE_FORM);
+  const handleGetStarted = () => {
+    setFormData(EMPTY_FORM);
+    setResult(null);
+    setAppealDraft('');
+    setFilingStatus('Draft');
+    setFiledAt(null);
+    setDraftId(null);
     setStep('form');
-    handleSubmit(null, SAMPLE_FORM);
   };
 
   const handleCopy = () => {
@@ -735,8 +743,10 @@ const handleSubmit = async (e, submissionData = formData) => {
       </header>
 
       <div className="trust-banner" role="note">
-        <ShieldCheck size={17} aria-hidden="true" />
-        <span><strong>Independent citizen-assistance tool.</strong> Adhikar AI is not affiliated with, endorsed by, or operated by the Government of India.</span>
+        <div className="trust-ticker">
+          <ShieldCheck size={17} aria-hidden="true" />
+          <span><strong>Important:</strong> Adhikar AI is an independent citizen-assistance tool, not affiliated with, endorsed by, or operated by the Government of India. Verify details on official portals before filing.</span>
+        </div>
       </div>
 
       {/* Landing Page */}
@@ -755,16 +765,10 @@ const handleSubmit = async (e, submissionData = formData) => {
               </p>
               <div className="pt-4 flex flex-wrap gap-4">
                 <button
-                  onClick={() => setStep('form')}
+                  onClick={handleGetStarted}
                   className="px-8 py-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-base shadow-xl shadow-indigo-600/30 transition-all cursor-pointer"
                 >
                   {t.getStarted}
-                </button>
-                <button
-                  onClick={handleSample}
-                  className="px-6 py-4 rounded-xl border border-indigo-200 bg-white hover:bg-indigo-50 text-indigo-700 font-bold text-base transition-all cursor-pointer"
-                >
-                  Try a sample problem
                 </button>
               </div>
             </div>
@@ -963,7 +967,7 @@ const handleSubmit = async (e, submissionData = formData) => {
       {step === 'result' && (
         <main id="main-content" className="max-w-7xl mx-auto px-6 py-10">
           <div className="flex items-center justify-between mb-6">
-            <button onClick={() => setStep('form')} className="text-xs text-indigo-600 font-bold hover:underline">
+            <button onClick={handleGetStarted} className="text-xs text-indigo-600 font-bold hover:underline">
               {t.backHome}
             </button>
             <button onClick={() => setStep('landing')} className="text-xs text-slate-600 hover:underline">

@@ -576,18 +576,33 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 }
 
 .trust-banner {
-  justify-content: center;
-  gap: 0.6rem;
-  padding: 0.7rem 1.5rem;
+  position: relative;
+  display: block;
+  overflow: hidden;
+  padding: 0.65rem 0;
   background: #eef3f8;
   color: var(--civic-navy);
   border-bottom: 1px solid var(--civic-line);
   font-size: 0.8rem;
-  text-align: center;
   min-width: 0;
 }
 
-.trust-banner span { min-width: 0; }
+.trust-ticker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-width: max-content;
+  padding-left: 100%;
+  animation: civic-ticker 28s linear infinite;
+}
+
+.trust-banner:hover .trust-ticker,
+.trust-banner:focus-within .trust-ticker { animation-play-state: paused; }
+
+@keyframes civic-ticker {
+  from { transform: translateX(0); }
+  to { transform: translateX(-100%); }
+}
 
 .header-inner, .brand-lockup {
   min-width: 0;
@@ -676,6 +691,10 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   .brand-lockup .text-\[10px\] { display: none; }
   .header-inner > div:last-child { gap: 0.5rem; }
   .header-inner select { max-width: 7.2rem; padding: 0.45rem; font-size: 0.75rem; }
-  .trust-banner { padding-inline: 1rem; text-align: left; align-items: flex-start; }
+  .trust-banner { padding-inline: 0; text-align: left; }
   .site-footer { padding: 1.5rem 1rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .trust-ticker { animation: none; padding-left: 1rem; }
 }

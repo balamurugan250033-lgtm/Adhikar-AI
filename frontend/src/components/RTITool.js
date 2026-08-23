@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { apiUrl } from '../api';
+import { apiUrl, readJsonResponse } from '../api';
 
 export default function RTITool() {
   const [formData, setFormData] = useState({
@@ -36,11 +36,7 @@ export default function RTITool() {
         body: JSON.stringify(formData),
       });
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.detail || 'Failed to generate RTI draft');
-      }
+      const data = await readJsonResponse(response);
 
       setRtiDraft(data.rti_draft || data.draft || '');
       setInstructions(data.instructions || data.guidelines || '');

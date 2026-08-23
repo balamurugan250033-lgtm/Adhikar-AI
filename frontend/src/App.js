@@ -1,6 +1,6 @@
 import logo from './logo.png';
 import React, { useState, useEffect } from 'react';
-import { apiUrl } from './api';
+import { apiUrl, readJsonResponse } from './api';
 
 // 22 Official Indian Languages + English with Speech recognition locale codes
 const LANGUAGES = [
@@ -493,12 +493,8 @@ const handleSubmit = async (e) => {
         body: JSON.stringify({ ...formData, language })
       });
 
-      const data = await response.json();
+      const data = await readJsonResponse(response);
       console.log("Backend Response Data:", data); // <-- Look at this in your browser F12 Console!
-
-      if (!response.ok) {
-        throw new Error(data.detail || 'Backend response failed');
-      }
 
       setResult(data);
       setApiOnline(true);

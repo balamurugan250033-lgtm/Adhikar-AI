@@ -698,6 +698,27 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   background: #fff;
 }
 
+.draft-panel {
+  width: 100%;
+  max-width: 58rem;
+  margin: 0 auto 2rem;
+}
+
+.guidance-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.45rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  color: var(--civic-navy);
+  background: #f8fafc;
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.guidance-link:hover { background: #eef3f8; }
+
 .submission-heading-row {
   display: flex;
   align-items: center;
@@ -807,6 +828,8 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   .submission-phases { grid-template-columns: 1fr; }
   .submission-heading-row { align-items: flex-start; flex-direction: column; }
   .submission-copy-button { width: 100%; justify-content: center; }
+  .draft-panel .flex { flex-wrap: wrap; }
+  .guidance-link { width: 100%; justify-content: center; }
 }
 
 .official-document {

@@ -53,7 +53,7 @@ export default function SubmissionGuidelines({ result = {}, formData = {} }) {
   };
 
   return (
-    <section className="submission-guidelines" aria-labelledby="submission-guidelines-title">
+    <section id="submission-guidelines" className="submission-guidelines" aria-labelledby="submission-guidelines-title">
       <div className="submission-heading-row">
         <h3 id="submission-guidelines-title"><ClipboardCheck size={18} aria-hidden="true" /> Submission Guidelines &amp; Target Department</h3>
         <button type="button" className="submission-copy-button" onClick={handleCopy} aria-label="Copy submission details">

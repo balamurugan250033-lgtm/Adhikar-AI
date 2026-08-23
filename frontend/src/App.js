@@ -2,7 +2,7 @@ import logo from './logo.png';
 import React, { useState, useEffect } from 'react';
 import { apiUrl, readJsonResponse } from './api';
 import './App.css';
-import { Accessibility, Download, ExternalLink, FileText, Home, Info, Languages, Mic, ShieldCheck, Square } from 'lucide-react';
+import { Accessibility, ArrowDown, Download, ExternalLink, FileText, Home, Info, Languages, Mic, ShieldCheck, Square } from 'lucide-react';
 import SubmissionGuidelines from './components/SubmissionGuidelines';
 
 // 22 Official Indian Languages + English with Speech recognition locale codes
@@ -1017,9 +1017,7 @@ const handleSubmit = async (e, submissionData = formData) => {
             </section>
           )}
 
-          <SubmissionGuidelines result={result} formData={formData} />
-
-          <div className="grid lg:grid-cols-2 gap-8">
+          <div className="draft-panel">
             {/* RTI Draft Section */}
             <div className="bg-white rounded-2xl border border-slate-200 shadow-xl shadow-slate-200/50 p-6">
               <div className="flex items-center justify-between mb-3">
@@ -1031,6 +1029,9 @@ const handleSubmit = async (e, submissionData = formData) => {
                   <button onClick={handleDownloadPDF} className="text-xs px-3 py-1 bg-indigo-600 hover:bg-indigo-700 text-white rounded-md font-medium cursor-pointer">
                     <Download size={14} aria-hidden="true" /> {cleanLabel(t.pdfBtn)}
                   </button>
+                  <button onClick={() => document.getElementById('submission-guidelines')?.scrollIntoView({ behavior: 'smooth', block: 'start' })} className="guidance-link" type="button">
+                    <ArrowDown size={14} aria-hidden="true" /> Submission guidance
+                  </button>
                 </div>
               </div>
               <div className="w-full h-96 p-4 bg-slate-50 border border-slate-200 rounded-xl overflow-y-auto whitespace-pre-wrap text-xs text-slate-800 font-mono">
@@ -1039,6 +1040,7 @@ const handleSubmit = async (e, submissionData = formData) => {
             </div>
 
           </div>
+          <SubmissionGuidelines result={result} formData={formData} />
         </main>
       )}
       <footer className="site-footer">

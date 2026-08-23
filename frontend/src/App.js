@@ -46,8 +46,8 @@ const SAMPLE_FORM = {
 };
 
 const DEMO_HISTORY = [
-  { id: 'demo-1', applicant_name: 'Demo citizen', city: 'Chennai', language: 'English', date: 'Demo example', question: SAMPLE_FORM.question, rti_draft: 'Example draft ready to review', instructions: 'Review the PIO and portal guidance before filing.' },
-  { id: 'demo-2', applicant_name: 'Demo citizen', city: 'Bengaluru', language: 'English', date: 'Demo example', question: 'Request the status of a delayed street-light repair.', rti_draft: 'Example civic information request', instructions: 'Review the public authority before filing.' }
+  { id: 'demo-1', demo: true, applicant_name: SAMPLE_FORM.applicant_name, address: SAMPLE_FORM.address, city: SAMPLE_FORM.city, pincode: SAMPLE_FORM.pincode, state: SAMPLE_FORM.state, phone: SAMPLE_FORM.phone, email: SAMPLE_FORM.email, language: 'English', date: 'Demo example', question: SAMPLE_FORM.question },
+  { id: 'demo-2', demo: true, applicant_name: 'Ravi Nair', address: '44 MG Road', city: 'Bengaluru', pincode: '560001', state: 'Karnataka', phone: '9876543211', email: 'ravi@example.com', language: 'English', date: 'Demo example', question: 'The street lights on our road have not worked for three months. Please provide the complaint status, repair timeline, and responsible department records.' }
 ];
 
 const UI_TEXT = {
@@ -614,6 +614,24 @@ const handleSubmit = async (e, submissionData = formData) => {
   };
 
   const handleLoadHistory = (item) => {
+    if (item.demo) {
+      const demoForm = {
+        applicant_name: item.applicant_name,
+        address: item.address,
+        city: item.city,
+        pincode: item.pincode,
+        state: item.state || 'Tamil Nadu',
+        phone: item.phone || '',
+        email: item.email || '',
+        question: item.question
+      };
+      setLanguage(item.language || 'English');
+      setFormData(demoForm);
+      setStep('form');
+      handleSubmit(null, demoForm);
+      return;
+    }
+
     setDraftId(item.id);
     setFormData({
       applicant_name: item.applicant_name || '',
@@ -627,7 +645,13 @@ const handleSubmit = async (e, submissionData = formData) => {
     });
     setResult({
       rti_draft: item.rti_draft,
-      instructions: item.instructions
+      instructions: item.instructions,
+      department: item.department,
+      public_authority: item.public_authority,
+      pio: item.pio,
+      confidence: item.confidence,
+      state: item.state,
+      status_options: item.status_options
     });
     setStep('result');
     setFilingStatus(item.status || 'Draft');

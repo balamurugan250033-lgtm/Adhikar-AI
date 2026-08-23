@@ -1,10 +1,11 @@
 import React from 'react';
+import { ArrowRight, ClipboardList, FileText, Landmark, Scale, ShieldCheck } from 'lucide-react';
 
 const FEATURES = [
-  { emoji: '🏛️', title: 'RTI Drafting Agent', desc: 'Turn your plain-language question into a properly formatted RTI application, addressed to the right department.' },
-  { emoji: '⚖️', title: 'Rights Navigator', desc: 'Describe your problem — tenant dispute, workplace issue, consumer fraud — and get your exact legal rights explained simply.' },
-  { emoji: '📋', title: 'Scheme Eligibility', desc: 'Enter your details and discover every government scheme you qualify for — PM Awas, Ujjwala, scholarships and more.' },
-  { emoji: '📝', title: 'Form Filler', desc: 'Answer simple questions in plain language. Adhikar AI auto-fills the official government form for you.' },
+  { icon: FileText, title: 'RTI Drafting Agent', desc: 'Turn your plain-language question into a properly formatted RTI application, addressed to the right department.' },
+  { icon: Scale, title: 'Rights Navigator', desc: 'Describe your problem and get general civic guidance with clear next steps.' },
+  { icon: Landmark, title: 'Scheme Eligibility', desc: 'Explore public-service information and verify eligibility on the relevant official portal.' },
+  { icon: ClipboardList, title: 'Form Filler', desc: 'Organise your information in plain language before completing an official government form.' },
 ];
 
 export default function LandingPage({ onGetStarted }) {
@@ -13,11 +14,11 @@ export default function LandingPage({ onGetStarted }) {
       <nav className="landing-nav">
         <div className="logo">⚖️ Adhikar<span className="logo-accent"> AI</span>
         </div>
-        <button className="btn-primary" onClick={onGetStarted}>Get Started →</button>
+        <button className="btn-primary" onClick={onGetStarted}>Get Started <ArrowRight size={16} aria-hidden="true" /></button>
       </nav>
 
       <section className="hero">
-        <div className="hero-badge">🇮🇳 Built for every Indian citizen</div>
+        <div className="hero-badge"><ShieldCheck size={15} aria-hidden="true" /> Independent citizen assistance</div>
         <h1 className="hero-title">
           Your rights exist.<br />
           <span className="hero-accent">Now you can use them.</span>
@@ -45,11 +46,11 @@ export default function LandingPage({ onGetStarted }) {
         <h2 className="section-title">Four tools. One platform.<br />Complete civic empowerment.</h2>
         <div className="features-grid">
           {FEATURES.map((f, i) => (
-            <div key={i} className="feature-card">
-              <div className="feature-emoji">{f.emoji}</div>
+            <div key={f.title} className="feature-card">
+              <div className="feature-icon"><f.icon size={24} strokeWidth={1.8} aria-hidden="true" /></div>
               <h3 className="feature-title">{f.title}</h3>
               <p className="feature-desc">{f.desc}</p>
-              <button className="feature-link" onClick={onGetStarted}>Try it →</button>
+              <button className="feature-link" onClick={onGetStarted}>Try it <ArrowRight size={15} aria-hidden="true" /></button>
             </div>
           ))}
         </div>
@@ -64,13 +65,13 @@ export default function LandingPage({ onGetStarted }) {
             <h3>Describe your situation</h3>
             <p>Type or speak in plain language — no legal jargon needed.</p>
           </div>
-          <div className="step-arrow">→</div>
+          <div className="step-arrow" aria-hidden="true"><ArrowRight size={18} /></div>
           <div className="step">
             <div className="step-num">02</div>
             <h3>AI understands & responds</h3>
             <p>Adhikar AI identifies the relevant law or scheme and explains it simply.</p>
           </div>
-          <div className="step-arrow">→</div>
+          <div className="step-arrow" aria-hidden="true"><ArrowRight size={18} /></div>
           <div className="step">
             <div className="step-num">03</div>
             <h3>Take action</h3>
@@ -83,13 +84,13 @@ export default function LandingPage({ onGetStarted }) {
         <h2>Know your Adhikar. Exercise your rights.</h2>
         <p>Every Indian citizen deserves to know and use their rights.</p>
         <button className="btn-primary btn-lg" onClick={onGetStarted}>
-          Get Started — It's Free →
+          Get Started <ArrowRight size={18} aria-hidden="true" />
         </button>
       </section>
 
       <footer className="landing-footer">
         <div className="logo" style={{justifyContent:'center', marginBottom:'0.5rem'}}>
-          ⚖️ Adhikar<span className="logo-accent"> AI</span>
+          <Scale size={22} aria-hidden="true" /> Adhikar<span className="logo-accent"> AI</span>
         </div>
         <p>Built for OOSC 4.0 Hackathon · GDG IIIT Allahabad · PS3 — AI for Civic & Legal Empowerment</p>
         <p className="disclaimer">Adhikar AI provides general legal information, not legal advice. For complex matters, consult a qualified lawyer.</p>

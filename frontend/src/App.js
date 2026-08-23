@@ -1,6 +1,8 @@
 import logo from './logo.png';
 import React, { useState, useEffect } from 'react';
 import { apiUrl, readJsonResponse } from './api';
+import './App.css';
+import { Accessibility, ExternalLink, Home, Info, Languages, ShieldCheck } from 'lucide-react';
 
 // 22 Official Indian Languages + English with Speech recognition locale codes
 const LANGUAGES = [
@@ -450,6 +452,7 @@ export default function App() {
   const [filedAt, setFiledAt] = useState(null);
   const [draftId, setDraftId] = useState(null);
   const [loadingStage, setLoadingStage] = useState(0);
+  const [highContrast, setHighContrast] = useState(false);
 
   const t = UI_TEXT[language] || UI_TEXT['English'];
 
@@ -657,7 +660,19 @@ const handleSubmit = async (e, submissionData = formData) => {
   const resolvedInstructions = result?.instructions || result?.guidelines || result?.steps || 'Fill out the form on the landing page...';
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans">
+    <div className={`min-h-screen bg-slate-50 text-slate-900 font-sans ${highContrast ? 'high-contrast' : ''}`}>
+      <a href="#main-content" className="skip-link">Skip to content</a>
+      <div className="utility-bar">
+        <div className="utility-inner">
+          <span><Languages size={14} aria-hidden="true" /> Citizen assistance portal</span>
+          <div className="utility-actions">
+            <span>English</span>
+            <button type="button" onClick={() => setHighContrast(value => !value)} aria-pressed={highContrast} aria-label="Toggle high contrast mode">
+              <Accessibility size={14} aria-hidden="true" /> {highContrast ? 'Standard contrast' : 'High contrast'}
+            </button>
+          </div>
+        </div>
+      </div>
       {/* Header */}
       <header className="border-b border-slate-200 bg-white sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
@@ -690,9 +705,14 @@ const handleSubmit = async (e, submissionData = formData) => {
         </div>
       </header>
 
+      <div className="trust-banner" role="note">
+        <ShieldCheck size={17} aria-hidden="true" />
+        <span><strong>Independent citizen-assistance tool.</strong> Adhikar AI is not affiliated with, endorsed by, or operated by the Government of India.</span>
+      </div>
+
       {/* Landing Page */}
       {step === 'landing' && (
-        <main className="max-w-7xl mx-auto px-6 py-16">
+        <main id="main-content" className="max-w-7xl mx-auto px-6 py-16">
           <div className="grid lg:grid-cols-12 gap-12 items-center">
             <div className="lg:col-span-7 space-y-6">
               <span className="inline-block max-w-full px-3 py-1 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-700 text-xs font-bold tracking-wide uppercase">
@@ -750,12 +770,22 @@ const handleSubmit = async (e, submissionData = formData) => {
               </div>
             </div>
           </div>
+          <section className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-5" aria-label="How this works and data privacy">
+            <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+              <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2"><Info size={19} aria-hidden="true" /> How this works</h2>
+              <p className="mt-2 text-sm text-slate-600 leading-relaxed">Describe the records or action you need. Adhikar AI suggests a public authority and prepares a draft for your review. It never files an application for you.</p>
+            </div>
+            <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+              <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2"><ShieldCheck size={19} aria-hidden="true" /> Data privacy</h2>
+              <p className="mt-2 text-sm text-slate-600 leading-relaxed">Draft history is kept in this browser only. Avoid entering Aadhaar, PAN, passwords, or other sensitive information.</p>
+            </div>
+          </section>
         </main>
       )}
 
       {/* Form Input Page */}
       {step === 'form' && (
-        <main className="max-w-3xl mx-auto px-6 py-10">
+        <main id="main-content" className="max-w-3xl mx-auto px-6 py-10">
           <div className="bg-white rounded-2xl border border-slate-200 shadow-xl shadow-slate-200/50 p-8">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-2xl font-bold text-slate-900">{t.formTitle}</h2>
@@ -902,13 +932,13 @@ const handleSubmit = async (e, submissionData = formData) => {
 
       {/* Result Page */}
       {step === 'result' && (
-        <main className="max-w-7xl mx-auto px-6 py-10">
+        <main id="main-content" className="max-w-7xl mx-auto px-6 py-10">
           <div className="flex items-center justify-between mb-6">
             <button onClick={() => setStep('form')} className="text-xs text-indigo-600 font-bold hover:underline">
               {t.backHome}
             </button>
             <button onClick={() => setStep('landing')} className="text-xs text-slate-600 hover:underline">
-              🏠 Home
+              <Home size={14} aria-hidden="true" /> Home
             </button>
           </div>
 
@@ -968,6 +998,16 @@ const handleSubmit = async (e, submissionData = formData) => {
           </div>
         </main>
       )}
+      <footer className="site-footer">
+        <div><strong>Adhikar AI</strong><span> Independent civic information support</span></div>
+        <nav aria-label="Footer links">
+          <a href="https://rtionline.gov.in" target="_blank" rel="noreferrer">Official RTI portal <ExternalLink size={13} aria-hidden="true" /></a>
+          <a href="#privacy"><Info size={13} aria-hidden="true" /> Privacy</a>
+          <a href="#disclaimer">Disclaimer</a>
+        </nav>
+        <p id="privacy">Your drafts are stored in this browser's local storage. They are not a government case record or submission.</p>
+        <p id="disclaimer">Review all generated text and official instructions before filing. For complex matters, consult a qualified professional.</p>
+      </footer>
     </div>
   );
 }

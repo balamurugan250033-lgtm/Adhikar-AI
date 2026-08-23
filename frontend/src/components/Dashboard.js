@@ -3,6 +3,7 @@ import RTITool from './RTITool';
 import RightsTool from './RightsTool';
 import SchemeTool from './SchemeTool';
 import FormTool from './FormTool';
+import { ClipboardList, FileText, Landmark, Scale } from 'lucide-react';
 
 function Dashboard() {
   const [activeTab, setActiveTab] = useState('rti');
@@ -34,25 +35,25 @@ function Dashboard() {
           className={`nav-tab ${activeTab === 'rti' ? 'active' : ''}`}
           onClick={() => setActiveTab('rti')}
         >
-          📜 RTI Draft Generator
+          <FileText size={16} aria-hidden="true" /> RTI Draft Generator
         </button>
         <button
           className={`nav-tab ${activeTab === 'rights' ? 'active' : ''}`}
           onClick={() => setActiveTab('rights')}
         >
-          ⚖️ Know Your Rights
+          <Scale size={16} aria-hidden="true" /> Know Your Rights
         </button>
         <button
           className={`nav-tab ${activeTab === 'schemes' ? 'active' : ''}`}
           onClick={() => setActiveTab('schemes')}
         >
-          🏛️ Government Schemes
+          <Landmark size={16} aria-hidden="true" /> Government Schemes
         </button>
         <button
           className={`nav-tab ${activeTab === 'forms' ? 'active' : ''}`}
           onClick={() => setActiveTab('forms')}
         >
-          📁 Legal Form Assistant
+          <ClipboardList size={16} aria-hidden="true" /> Legal Form Assistant
         </button>
       </div>
 

@@ -1,8 +1,9 @@
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
-test('renders learn react link', () => {
+test('renders the citizen assistance shell', () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  expect(screen.getAllByText('Adhikar AI').length).toBeGreaterThan(0);
+  expect(screen.getByText(/independent citizen-assistance tool/i)).toBeInTheDocument();
+  expect(screen.getByRole('link', { name: /skip to content/i })).toBeInTheDocument();
 });

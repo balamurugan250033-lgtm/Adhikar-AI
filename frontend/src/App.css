@@ -508,3 +508,142 @@ textarea.input-field {
   font-size: 0.82rem;
   border-top: 1px solid #e2e8f0;
 }
+
+:root {
+  --civic-navy: #1e3a5f;
+  --civic-ink: #14213d;
+  --civic-muted: #526174;
+  --civic-line: #d7dee8;
+  --civic-accent: #2563a6;
+}
+
+body {
+  font-family: Inter, "Segoe UI", sans-serif;
+  color: var(--civic-ink);
+  overflow-x: hidden;
+}
+
+h1, h2, h3 {
+  font-family: Georgia, "Times New Roman", serif;
+  letter-spacing: 0;
+}
+
+button, a, input, textarea, select {
+  transition: border-color 160ms ease, background-color 160ms ease, color 160ms ease, box-shadow 160ms ease;
+}
+
+button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {
+  outline: 3px solid #f0a202;
+  outline-offset: 2px;
+}
+
+.utility-bar {
+  background: var(--civic-navy);
+  color: #f8fafc;
+  font-size: 0.75rem;
+}
+
+.utility-inner {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 0.4rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.utility-inner span, .utility-actions, .utility-actions button, .trust-banner, .btn-primary, .feature-link, .document-kicker, .site-footer nav a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.utility-actions {
+  gap: 1rem;
+}
+
+.utility-actions button {
+  color: inherit;
+  background: transparent;
+  padding: 0;
+}
+
+.trust-banner {
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0.7rem 1.5rem;
+  background: #eef3f8;
+  color: var(--civic-navy);
+  border-bottom: 1px solid var(--civic-line);
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+.trust-banner::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin-top: 2.35rem;
+  height: 3px;
+  background: linear-gradient(90deg, #e07a2d 0 33%, #ffffff 33% 66%, #3d8b5d 66%);
+}
+
+.skip-link {
+  position: fixed;
+  top: -4rem;
+  left: 1rem;
+  z-index: 200;
+  padding: 0.65rem 1rem;
+  background: #fff;
+  color: var(--civic-navy);
+  border: 2px solid var(--civic-navy);
+}
+
+.skip-link:focus { top: 1rem; }
+
+.site-footer {
+  background: var(--civic-navy);
+  color: #e6edf5;
+  padding: 2rem max(1.5rem, calc((100vw - 80rem) / 2));
+  font-size: 0.8rem;
+  line-height: 1.6;
+}
+
+.site-footer nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.site-footer a { color: #fff; text-decoration: underline; }
+.site-footer p { max-width: 62rem; color: #c5d2e1; }
+
+.official-document {
+  font-family: Georgia, "Times New Roman", serif;
+  line-height: 1.65;
+  background: #fffdf8 !important;
+  border-color: #c8bda9 !important;
+}
+
+.document-kicker {
+  margin-bottom: 0.8rem;
+  padding-bottom: 0.55rem;
+  border-bottom: 1px solid #c8bda9;
+  color: var(--civic-navy);
+  font-family: Inter, "Segoe UI", sans-serif;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+}
+
+.high-contrast { filter: contrast(1.12); }
+.high-contrast .text-slate-500, .high-contrast .text-slate-600 { color: #26384d !important; }
+
+@media (max-width: 640px) {
+  .utility-inner { padding-inline: 1rem; }
+  .utility-inner > span { max-width: 12rem; }
+  .trust-banner { padding-inline: 1rem; text-align: left; align-items: flex-start; }
+  .site-footer { padding: 1.5rem 1rem; }
+}

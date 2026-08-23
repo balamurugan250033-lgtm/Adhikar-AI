@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { apiUrl, readJsonResponse } from '../api';
+import { Copy, FileText } from 'lucide-react';
 
 export default function RTITool() {
   const [formData, setFormData] = useState({
@@ -157,12 +158,12 @@ export default function RTITool() {
                   onClick={handleCopy}
                   className="text-xs bg-indigo-50 text-indigo-700 hover:bg-indigo-100 px-3 py-1 rounded font-medium transition"
                 >
-                  Copy Text
+                  <><Copy size={14} aria-hidden="true" /> Copy Text</>
                 </button>
               )}
             </div>
-            <div className="w-full h-60 p-3 bg-gray-50 border border-gray-200 rounded-md overflow-y-auto whitespace-pre-wrap text-xs text-gray-800 font-mono">
-              {rtiDraft || 'Fill out the form on the left and click generate to view your official application draft here...'}
+            <div className="official-document w-full h-60 p-3 bg-gray-50 border border-gray-200 rounded-md overflow-y-auto whitespace-pre-wrap text-xs text-gray-800">
+              {rtiDraft ? <><div className="document-kicker"><FileText size={14} aria-hidden="true" /> APPLICATION UNDER THE RIGHT TO INFORMATION ACT, 2005</div>{rtiDraft}</> : 'Fill out the form on the left and generate a draft to review it here.'}
             </div>
             <div className="flex justify-between items-center mt-2 text-xs text-gray-500">
               <span>Character count: {charCount} / 3000</span>

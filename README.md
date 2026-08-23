@@ -8,7 +8,7 @@ Adhikar AI is an independent informational tool. It is not a Government of India
 
 ## Live Links
 
-- **Repository:** [github.com/balamurugan250033-lgtm/Adhikar-AI](https://github.com/balamurugan250033-lgtm/Adhikar-AI)
+- **Repository:** [github.com/balamurugan250033-lgtm/Vigrah-AI](https://github.com/balamurugan250033-lgtm/Vigrah-AI)
 - **Production website:** [vigrah.vercel.app](https://vigrah.vercel.app/)
 - **Frontend (local):** [http://localhost:3000](http://localhost:3000)
 - **Backend health check (local):** [http://localhost:8000](http://localhost:8000)

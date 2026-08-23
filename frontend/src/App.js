@@ -586,7 +586,6 @@ const handleSubmit = async (e, submissionData = formData) => {
 
   const handleDownloadPDF = () => {
     const textToPrint = result?.rti_draft || result?.draft || result?.text || result?.application || result?.response || '';
-    const instToPrint = result?.instructions || result?.guidelines || result?.steps || '';
     if (!textToPrint) return;
     
     const printWindow = window.open('', '_blank');
@@ -604,9 +603,6 @@ const handleSubmit = async (e, submissionData = formData) => {
         <body>
           <h2>RTI ONLINE PORTAL TEXT</h2>
           <pre>${textToPrint}</pre>
-          <div class="footer">
-            <p><strong>Submission Guidelines & Target Department:</strong><br/>${instToPrint}</p>
-          </div>
           <script>window.onload = function() { window.print(); }</script>
         </body>
       </html>

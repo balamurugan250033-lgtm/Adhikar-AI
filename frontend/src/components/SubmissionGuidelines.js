@@ -62,6 +62,12 @@ export default function SubmissionGuidelines({ result = {}, formData = {} }) {
         </button>
       </div>
 
+      <div className="submission-phases" aria-label="Submission phases">
+        <span className="submission-phase phase-form"><strong>Phase 1</strong> Form Fill</span>
+        <span className="submission-phase phase-fee"><strong>Phase 2</strong> Fee Payment</span>
+        <span className="submission-phase phase-track"><strong>Phase 3</strong> Confirmation &amp; Tracking</span>
+      </div>
+
       <div className="submission-card-grid">
         <div className="submission-card">
           <h4>Where to File</h4>

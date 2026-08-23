@@ -2,7 +2,7 @@ import logo from './logo.png';
 import React, { useState, useEffect } from 'react';
 import { apiUrl, readJsonResponse } from './api';
 import './App.css';
-import { Accessibility, ArrowDown, Download, ExternalLink, FileText, Home, Info, Languages, Mic, ShieldCheck, Square } from 'lucide-react';
+import { Accessibility, ArrowDown, Download, ExternalLink, FileText, Home, Info, Languages, Mic, Moon, ShieldCheck, Square, Sun } from 'lucide-react';
 import SubmissionGuidelines from './components/SubmissionGuidelines';
 
 // 22 Official Indian Languages + English with Speech recognition locale codes
@@ -459,6 +459,7 @@ export default function App() {
   const [appealDraft, setAppealDraft] = useState('');
   const [loadingStage, setLoadingStage] = useState(0);
   const [highContrast, setHighContrast] = useState(false);
+  const [darkMode, setDarkMode] = useState(() => localStorage.getItem('adhikar_theme') === 'dark');
 
   const t = UI_TEXT[language] || UI_TEXT['English'];
   const cleanLabel = (label) => label.replace(/^[^\p{L}\p{N}]+/u, '').trim();
@@ -487,6 +488,10 @@ export default function App() {
     const timer = setInterval(() => setLoadingStage(stage => (stage + 1) % 3), 700);
     return () => clearInterval(timer);
   }, [loading]);
+
+  useEffect(() => {
+    localStorage.setItem('adhikar_theme', darkMode ? 'dark' : 'light');
+  }, [darkMode]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -698,7 +703,7 @@ const handleSubmit = async (e, submissionData = formData) => {
   const resolvedDraft = result?.rti_draft || result?.draft || result?.text || result?.application || result?.response || '';
 
   return (
-    <div className={`min-h-screen bg-slate-50 text-slate-900 font-sans ${highContrast ? 'high-contrast' : ''}`}>
+    <div className={`min-h-screen bg-slate-50 text-slate-900 font-sans ${highContrast ? 'high-contrast' : ''} ${darkMode ? 'dark-mode' : ''}`}>
       <a href="#main-content" className="skip-link">Skip to content</a>
       <div className="utility-bar">
         <div className="utility-inner">
@@ -707,6 +712,9 @@ const handleSubmit = async (e, submissionData = formData) => {
             <span>English</span>
             <button type="button" onClick={() => setHighContrast(value => !value)} aria-pressed={highContrast} aria-label="Toggle high contrast mode">
               <Accessibility size={14} aria-hidden="true" /> {highContrast ? 'Standard contrast' : 'High contrast'}
+            </button>
+            <button type="button" onClick={() => setDarkMode(value => !value)} aria-pressed={darkMode} aria-label="Toggle dark mode">
+              {darkMode ? <Sun size={14} aria-hidden="true" /> : <Moon size={14} aria-hidden="true" />} {darkMode ? 'Light mode' : 'Dark mode'}
             </button>
           </div>
         </div>

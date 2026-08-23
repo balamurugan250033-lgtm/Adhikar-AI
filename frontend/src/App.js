@@ -1017,6 +1017,8 @@ const handleSubmit = async (e, submissionData = formData) => {
             </section>
           )}
 
+          <SubmissionGuidelines result={result} formData={formData} />
+
           <div className="grid lg:grid-cols-2 gap-8">
             {/* RTI Draft Section */}
             <div className="bg-white rounded-2xl border border-slate-200 shadow-xl shadow-slate-200/50 p-6">
@@ -1036,7 +1038,6 @@ const handleSubmit = async (e, submissionData = formData) => {
               </div>
             </div>
 
-            <SubmissionGuidelines result={result} formData={formData} />
           </div>
         </main>
       )}

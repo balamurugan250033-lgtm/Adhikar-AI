@@ -677,7 +677,7 @@ const handleSubmit = async (e, submissionData = formData) => {
       <header className="border-b border-slate-200 bg-white sticky top-0 z-50">
         <div className="header-inner max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="brand-lockup flex items-center space-x-3 cursor-pointer" onClick={() => setStep('landing')}>
-            <img src={logo} alt="Adhikar AI Logo" className="brand-logo w-24 h-28 object-contain rounded-xl" />
+            <img src={logo} alt="Adhikar AI logo" className="brand-logo object-contain" />
             <div>
               <span className="font-bold text-lg text-slate-900 tracking-tight">{t.brand}</span>
               <span className="block text-[10px] text-indigo-600 font-semibold uppercase tracking-wider">{t.tagline}</span>

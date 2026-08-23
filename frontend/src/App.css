@@ -593,6 +593,13 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   min-width: 0;
 }
 
+.brand-logo {
+  width: 5rem;
+  height: 3.25rem;
+  flex: 0 0 auto;
+  object-fit: contain;
+}
+
 .brand-lockup > div { min-width: 0; }
 
 .trust-banner::after {
@@ -663,7 +670,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   .utility-actions { gap: 0.6rem; white-space: nowrap; }
   .utility-actions > span { display: none; }
   .header-inner { padding-inline: 1rem; }
-  .brand-logo { width: 3.5rem !important; height: 3.5rem !important; }
+  .brand-logo { width: 3.5rem; height: 3rem; }
   .brand-lockup { gap: 0.5rem !important; }
   .brand-lockup .text-lg { font-size: 0.95rem; }
   .brand-lockup .text-\[10px\] { display: none; }

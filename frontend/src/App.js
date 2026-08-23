@@ -451,6 +451,7 @@ export default function App() {
   const [filingStatus, setFilingStatus] = useState('Draft');
   const [filedAt, setFiledAt] = useState(null);
   const [draftId, setDraftId] = useState(null);
+  const [appealDraft, setAppealDraft] = useState('');
   const [loadingStage, setLoadingStage] = useState(0);
   const [highContrast, setHighContrast] = useState(false);
 
@@ -673,6 +674,14 @@ const handleSubmit = async (e, submissionData = formData) => {
       setHistory(updatedHistory);
       localStorage.setItem('adhikar_rti_history', JSON.stringify(updatedHistory));
     }
+  };
+
+  const handleGenerateAppeal = () => {
+    const applicant = formData.applicant_name || 'Applicant Name';
+    const authority = result?.public_authority || 'the concerned Public Authority';
+    const appealType = filingStatus === 'Appealed' ? 'Second Appeal under Section 19(3)' : 'First Appeal under Section 19(1)';
+    const appeal = `To,\nThe First Appellate Authority,\n${authority}\n\nSubject: ${appealType} under the Right to Information Act, 2005\n\nI, ${applicant}, submitted an RTI application under Section 6(1) regarding:\n${formData.question || 'the information requested in my original RTI application.'}\n\nNo satisfactory response has been received within the statutory period. I request that the concerned authority direct the Public Information Officer to provide the requested information and explain the delay.\n\nApplicant: ${applicant}\nAddress: ${formData.address || ''}, ${formData.city || ''}, ${formData.state || ''} - ${formData.pincode || ''}\nOriginal filing date: ${filedAt ? new Date(filedAt).toLocaleDateString() : 'Enter filing date'}\n\nDate: ${new Date().toLocaleDateString()}\nSignature: ${applicant}`;
+    setAppealDraft(appeal);
   };
 
   const handleClearHistory = () => {
@@ -989,8 +998,22 @@ const handleSubmit = async (e, submissionData = formData) => {
                 {filedAt && <p className="mt-1 text-sm font-bold text-white">{Math.max(0, Math.ceil((new Date(filedAt).getTime() + 30 * 86400000 - Date.now()) / 86400000))} days remaining</p>}
                 {!filedAt && <p className="mt-3 text-xs text-slate-300">Choose Filed to start the response clock.</p>}
                 <p className="mt-3 text-[11px] text-slate-400">No response by day 30? Consider a First Appeal under Section 19(1).</p>
+                {filedAt && Math.ceil((new Date(filedAt).getTime() + 30 * 86400000 - Date.now()) / 86400000) <= 0 && (
+                  <button type="button" onClick={handleGenerateAppeal} className="mt-3 w-full rounded-lg bg-white px-3 py-2 text-xs font-bold text-slate-900">Generate First Appeal</button>
+                )}
               </div>
             </div>
+          )}
+
+          {appealDraft && (
+            <section className="mb-8 rounded-2xl border border-amber-200 bg-amber-50 p-5" aria-label="Generated appeal draft">
+              <div className="flex items-center justify-between gap-3">
+                <h2 className="text-sm font-bold text-slate-900">First Appeal draft under Section 19(1)</h2>
+                <button type="button" onClick={() => navigator.clipboard.writeText(appealDraft)} className="rounded-md bg-white px-3 py-1.5 text-xs font-semibold text-slate-700">Copy appeal</button>
+              </div>
+              <pre className="mt-3 max-h-72 overflow-y-auto whitespace-pre-wrap rounded-lg border border-amber-200 bg-white p-4 text-xs leading-relaxed text-slate-800">{appealDraft}</pre>
+              <p className="mt-2 text-[11px] text-slate-600">Review the correct appellate authority and official procedure before submitting. This is general information, not legal advice.</p>
+            </section>
           )}
 
           <div className="grid lg:grid-cols-2 gap-8">

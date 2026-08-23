@@ -2,7 +2,7 @@ import logo from './logo.png';
 import React, { useState, useEffect } from 'react';
 import { apiUrl, readJsonResponse } from './api';
 import './App.css';
-import { Accessibility, ArrowDown, Download, ExternalLink, FileText, Home, Info, Languages, Mic, Moon, ShieldCheck, Square, Sun } from 'lucide-react';
+import { Accessibility, ArrowDown, Download, ExternalLink, FileText, Home, Info, Languages, Mic, Moon, ShieldCheck, Square, Sun, Trash2 } from 'lucide-react';
 import SubmissionGuidelines from './components/SubmissionGuidelines';
 
 // 22 Official Indian Languages + English with Speech recognition locale codes
@@ -33,7 +33,7 @@ const LANGUAGES = [
 ];
 
 // Complete UI Localization Dictionary for all 22 Official Indian Languages + City/Pincode fields
-const STATES = ['Tamil Nadu', 'Karnataka', 'Maharashtra', 'Delhi', 'Kerala', 'Other state'];
+const STATES = ['Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chhattisgarh', 'Goa', 'Gujarat', 'Haryana', 'Himachal Pradesh', 'Jharkhand', 'Karnataka', 'Kerala', 'Madhya Pradesh', 'Maharashtra', 'Manipur', 'Meghalaya', 'Mizoram', 'Nagaland', 'Odisha', 'Punjab', 'Rajasthan', 'Sikkim', 'Tamil Nadu', 'Telangana', 'Tripura', 'Uttar Pradesh', 'Uttarakhand', 'West Bengal', 'Andaman and Nicobar Islands', 'Chandigarh', 'Dadra and Nagar Haveli and Daman and Diu', 'Delhi', 'Jammu and Kashmir', 'Ladakh', 'Lakshadweep', 'Puducherry', 'Other state'];
 
 const SAMPLE_FORM = {
   applicant_name: 'Asha Kumar',
@@ -700,6 +700,12 @@ const handleSubmit = async (e, submissionData = formData) => {
     localStorage.removeItem('adhikar_rti_history');
   };
 
+  const handleDeleteHistory = (id) => {
+    const updatedHistory = history.filter(item => item.id !== id);
+    setHistory(updatedHistory);
+    localStorage.setItem('adhikar_rti_history', JSON.stringify(updatedHistory));
+  };
+
   const resolvedDraft = result?.rti_draft || result?.draft || result?.text || result?.application || result?.response || '';
 
   return (
@@ -713,7 +719,7 @@ const handleSubmit = async (e, submissionData = formData) => {
             <button type="button" onClick={() => setHighContrast(value => !value)} aria-pressed={highContrast} aria-label="Toggle high contrast mode">
               <Accessibility size={14} aria-hidden="true" /> {highContrast ? 'Standard contrast' : 'High contrast'}
             </button>
-            <button type="button" onClick={() => setDarkMode(value => !value)} aria-pressed={darkMode} aria-label="Toggle dark mode">
+            <button className="theme-toggle" type="button" onClick={() => setDarkMode(value => !value)} aria-pressed={darkMode} aria-label="Toggle dark mode">
               {darkMode ? <Sun size={14} aria-hidden="true" /> : <Moon size={14} aria-hidden="true" />} {darkMode ? 'Light mode' : 'Dark mode'}
             </button>
           </div>
@@ -805,6 +811,9 @@ const handleSubmit = async (e, submissionData = formData) => {
                         className="px-3 py-1 bg-indigo-600 text-white text-xs rounded-lg font-medium shrink-0 cursor-pointer"
                       >
                         {t.loadDraft}
+                      </button>
+                      <button type="button" onClick={() => handleDeleteHistory(item.id)} className="delete-draft" aria-label={`Delete draft for ${item.applicant_name || 'RTI application'}`} title="Delete this draft">
+                        <Trash2 size={14} aria-hidden="true" />
                       </button>
                     </div>
                   ))

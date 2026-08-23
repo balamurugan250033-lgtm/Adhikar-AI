@@ -23,7 +23,7 @@ STATE_CONFIG = {
 
 def detect_state(data: dict, city: str):
     state = (data.get("state") or "").strip()
-    if state in STATE_CONFIG:
+    if state:
         return state
     city_state_map = {"chennai": "Tamil Nadu", "coimbatore": "Tamil Nadu", "bengaluru": "Karnataka", "bangalore": "Karnataka", "mumbai": "Maharashtra", "pune": "Maharashtra", "delhi": "Delhi", "kochi": "Kerala"}
     return city_state_map.get(city.lower(), "Tamil Nadu")
@@ -316,7 +316,7 @@ async def generate_rti(data: dict):
         email = data.get("email") or "applicant@gmail.com"
         language = data.get("language") or "English"
         state = detect_state(data, city)
-        state_config = STATE_CONFIG[state]
+        state_config = STATE_CONFIG.get(state, STATE_CONFIG["Other state"])
 
         current_date = datetime.now().strftime("%d-%m-%Y")
         ministry, public_authority, pio, confidence = get_smart_department_routing(problem, city)

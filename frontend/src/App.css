@@ -575,6 +575,12 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   padding: 0;
 }
 
+.theme-toggle {
+  padding: 0.25rem 0.45rem !important;
+  border: 1px solid rgba(255, 255, 255, 0.35) !important;
+  border-radius: 5px;
+}
+
 .trust-banner {
   position: relative;
   display: block;
@@ -667,6 +673,21 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 }
 
 .clear-history:hover { color: var(--civic-navy); background: #eef3f8; }
+
+.delete-draft {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  flex: 0 0 auto;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  background: #fff;
+  color: #526174;
+}
+
+.delete-draft:hover { background: #eef3f8; color: var(--civic-navy); }
 
 .tool-steps {
   display: flex;
@@ -934,6 +955,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .dark-mode .landing-nav,
 .dark-mode header { background: #172033 !important; border-color: #334155 !important; }
 .dark-mode .clear-history { color: #cbd5e1; }
+.dark-mode .delete-draft { background: #1e293b; border-color: #64748b; color: #e2e8f0; }
 .dark-mode .official-document { color: #e2e8f0 !important; }
 .dark-mode .document-kicker { color: #bfdbfe; border-color: #64748b; }
 .dark-mode .submission-detail { border-color: #334155; }

@@ -58,12 +58,12 @@ async def draft_rti(data: dict):
     city = (data.get("city") or "District").strip()
     pincode = (data.get("pincode") or "").strip()
     problem = (data.get("question") or "").strip()
-    state = data.get("state") if data.get("state") in STATE_FEES else "Tamil Nadu"
+    state = data.get("state") or "Tamil Nadu"
     if not all((name, address, city, pincode, problem)):
         raise HTTPException(status_code=400, detail="Please complete all required RTI fields.")
 
     department, authority, pio, confidence = route_problem(problem, city)
-    fee, portal = STATE_FEES[state]
+    fee, portal = STATE_FEES.get(state, ("Confirm the application fee and accepted payment method with the selected public authority.", "the relevant state government portal"))
     draft = f"""APPLICATION UNDER THE RIGHT TO INFORMATION ACT, 2005\n\nTo,\nThe Public Information Officer (PIO),\n{authority},\n{city} - {pincode}\n\nSubject: Application under Section 6(1) of the Right to Information Act, 2005 - {summarize_request(problem)}\n\nI, {name}, a citizen of India, request the following information under Section 6(1) of the Right to Information Act, 2005:\n\n1. Certified records and file movement details relating to: {problem}\n2. Names and designations of officials responsible for this matter.\n3. Current status and action taken, including reasons for any delay.\n\nApplicant address: {address}, {city}, {state} - {pincode}\n\nI hereby declare that the above information is true to the best of my knowledge. I request that the information be provided within the statutory period as per Section 7(1) of the RTI Act, 2005.\n\nDate: {datetime.now().strftime('%d-%m-%Y')}\n\nYours faithfully,\n\n{name}\nSignature of Applicant"""
     instructions = f"""PHASE 1 - FORM FILL ({portal})
 

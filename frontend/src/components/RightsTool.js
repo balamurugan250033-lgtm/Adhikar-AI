@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { apiUrl } from '../api';
+import { Copy, Scale } from 'lucide-react';
 
 const LANG_MAP = { en: 'English', hi: 'Hindi', ta: 'Tamil', te: 'Telugu', bn: 'Bengali' };
 
@@ -42,7 +43,7 @@ export default function RightsTool({ language }) {
   return (
     <div>
       <div className="tool-header">
-        <h2 className="tool-title">⚖️ Rights Navigator</h2>
+        <h2 className="tool-title"><Scale size={22} aria-hidden="true" /> Rights Navigator</h2>
         <p className="tool-desc">Describe your problem and get your exact legal rights explained in simple language.</p>
       </div>
       <div className="input-area">
@@ -66,7 +67,7 @@ export default function RightsTool({ language }) {
           <div className="output-label">✅ Your Legal Rights & Action Plan</div>
           <div className="output-text">{output}</div>
           <button className="copy-btn" onClick={() => { navigator.clipboard.writeText(output); setCopied(true); setTimeout(() => setCopied(false), 2000); }}>
-            {copied ? '✅ Copied!' : '📋 Copy'}
+            {copied ? 'Copied!' : <><Copy size={14} aria-hidden="true" /> Copy</>}
           </button>
         </div>
       )}

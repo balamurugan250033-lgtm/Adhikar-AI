@@ -12,7 +12,7 @@ export default function LandingPage({ onGetStarted }) {
   return (
     <div className="landing">
       <nav className="landing-nav">
-        <div className="logo">⚖️ Adhikar<span className="logo-accent"> AI</span>
+        <div className="logo"><Scale size={22} aria-hidden="true" /> Adhikar<span className="logo-accent"> AI</span>
         </div>
         <button className="btn-primary" onClick={onGetStarted}>Get Started <ArrowRight size={16} aria-hidden="true" /></button>
       </nav>
@@ -93,6 +93,7 @@ export default function LandingPage({ onGetStarted }) {
           <Scale size={22} aria-hidden="true" /> Adhikar<span className="logo-accent"> AI</span>
         </div>
         <p>Built for OOSC 4.0 Hackathon · GDG IIIT Allahabad · PS3 — AI for Civic & Legal Empowerment</p>
+        <p><a href="mailto:feedback@adhikarai.example">Contact / feedback</a></p>
         <p className="disclaimer">Adhikar AI provides general legal information, not legal advice. For complex matters, consult a qualified lawyer.</p>
       </footer>
     </div>

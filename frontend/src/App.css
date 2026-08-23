@@ -658,6 +658,38 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .site-footer a { color: #fff; text-decoration: underline; }
 .site-footer p { max-width: 62rem; color: #c5d2e1; }
 
+.clear-history {
+  padding: 0.2rem 0.45rem;
+  color: #526174;
+  background: transparent;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.clear-history:hover { color: var(--civic-navy); background: #eef3f8; }
+
+.tool-steps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  color: #526174;
+  font-size: 0.75rem;
+}
+
+.tool-steps span {
+  padding: 0.45rem 0.7rem;
+  border: 1px solid var(--civic-line);
+  border-radius: 999px;
+  background: #fff;
+}
+
+.tool-steps .active {
+  color: #fff;
+  border-color: var(--civic-navy);
+  background: var(--civic-navy);
+}
+
 .official-document {
   font-family: Georgia, "Times New Roman", serif;
   line-height: 1.65;

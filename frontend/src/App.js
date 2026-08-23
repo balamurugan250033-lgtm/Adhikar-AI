@@ -2,7 +2,7 @@ import logo from './logo.png';
 import React, { useState, useEffect } from 'react';
 import { apiUrl, readJsonResponse } from './api';
 import './App.css';
-import { Accessibility, ExternalLink, Home, Info, Languages, ShieldCheck } from 'lucide-react';
+import { Accessibility, Download, ExternalLink, FileText, Home, Info, Languages, Mic, ShieldCheck, Square } from 'lucide-react';
 
 // 22 Official Indian Languages + English with Speech recognition locale codes
 const LANGUAGES = [
@@ -460,6 +460,7 @@ export default function App() {
   const [highContrast, setHighContrast] = useState(false);
 
   const t = UI_TEXT[language] || UI_TEXT['English'];
+  const cleanLabel = (label) => label.replace(/^[^\p{L}\p{N}]+/u, '').trim();
 
   useEffect(() => {
     fetch(apiUrl('/api/health'))
@@ -609,7 +610,7 @@ const handleSubmit = async (e, submissionData = formData) => {
           </style>
         </head>
         <body>
-          <h2>RTI ONLINE PORTAL TEXT</h2>
+          <h2>APPLICATION UNDER THE RIGHT TO INFORMATION ACT, 2005</h2>
           <pre>${textToPrint}</pre>
           <script>window.onload = function() { window.print(); }</script>
         </body>
@@ -776,9 +777,9 @@ const handleSubmit = async (e, submissionData = formData) => {
             {/* History Sidebar / Quick Access on Landing */}
             <div className="lg:col-span-5 bg-white rounded-2xl border border-slate-200 shadow-xl shadow-slate-200/50 p-6">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="font-bold text-slate-900 text-sm">{t.historyTitle}</h3>
+                <h3 className="font-bold text-slate-900 text-sm"><FileText size={15} aria-hidden="true" /> {cleanLabel(t.historyTitle)}</h3>
                 {history.length > 0 && (
-                  <button onClick={handleClearHistory} className="text-xs text-rose-600 hover:underline">Clear All</button>
+                  <button onClick={handleClearHistory} className="clear-history">Clear All</button>
                 )}
               </div>
               <div className="max-h-80 overflow-y-auto space-y-3">
@@ -930,7 +931,7 @@ const handleSubmit = async (e, submissionData = formData) => {
                       isListening ? 'bg-rose-600 text-white animate-pulse' : 'bg-slate-100 hover:bg-slate-200 text-slate-700'
                     }`}
                   >
-                    <span>{isListening ? t.stopMic : t.micButton}</span>
+                    {isListening ? <><Square size={13} aria-hidden="true" /> {cleanLabel(t.stopMic)}</> : <><Mic size={13} aria-hidden="true" /> {cleanLabel(t.micButton)}</>}
                   </button>
                 </div>
                 <textarea
@@ -1026,7 +1027,7 @@ const handleSubmit = async (e, submissionData = formData) => {
                     {copied ? t.copied : t.copyBtn}
                   </button>
                   <button onClick={handleDownloadPDF} className="text-xs px-3 py-1 bg-indigo-600 hover:bg-indigo-700 text-white rounded-md font-medium cursor-pointer">
-                    {t.pdfBtn}
+                    <Download size={14} aria-hidden="true" /> {cleanLabel(t.pdfBtn)}
                   </button>
                 </div>
               </div>
@@ -1053,6 +1054,7 @@ const handleSubmit = async (e, submissionData = formData) => {
           <a href="#disclaimer">Disclaimer</a>
         </nav>
         <p id="privacy">Your drafts are stored in this browser's local storage. They are not a government case record or submission.</p>
+        <p>Built for OOSC 4.0 Hackathon · GDG IIIT Allahabad · PS3 — AI for Civic & Legal Empowerment. <a href="mailto:feedback@adhikarai.example">Contact / feedback</a></p>
         <p id="disclaimer">Review all generated text and official instructions before filing. For complex matters, consult a qualified professional.</p>
       </footer>
     </div>

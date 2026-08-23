@@ -43,6 +43,20 @@ def get_smart_department_routing(problem: str, city: str):
     else:
         return "Ministry of Personnel, Public Grievances and Pensions", f"District Collectorate / Public Authority, {city}", f"Public Information Officer, District Collectorate, {city}", 0.62
 
+def summarize_request(problem: str):
+    topic = problem.lower()
+    if any(word in topic for word in ("ration", "food", "pds", "rice", "wheat")):
+        return "Request for ration card application status"
+    if any(word in topic for word in ("road", "pothole", "street light", "drainage", "garbage", "water")):
+        return "Request for municipal service records"
+    if any(word in topic for word in ("police", "fir", "crime", "station", "complaint")):
+        return "Request for police complaint records"
+    if any(word in topic for word in ("electricity", "power", "bill", "transformer")):
+        return "Request for electricity service records"
+    if any(word in topic for word in ("college", "university", "exam", "certificate", "degree", "marksheet")):
+        return "Request for education records"
+    return "Request for public service records"
+
 # Comprehensive localization templates for all 22 official scheduled languages of India
 INSTRUCTIONS_DB = {
     "English": {
@@ -297,7 +311,7 @@ async def generate_rti(data: dict):
         address = data.get("address") or data.get("correspondenceAddress") or "33"
         city = data.get("city") or data.get("district") or "Chennai"
         pincode = data.get("pincode") or "600001"
-        problem = data.get("problem") or data.get("describeProblem") or data.get("description") or "Ration card delayed"
+        problem = data.get("problem") or data.get("question") or data.get("describeProblem") or data.get("description") or "Ration card delayed"
         phone = data.get("phone") or "+91 9876543210"
         email = data.get("email") or "applicant@gmail.com"
         language = data.get("language") or "English"
@@ -307,7 +321,9 @@ async def generate_rti(data: dict):
         current_date = datetime.now().strftime("%d-%m-%Y")
         ministry, public_authority, pio, confidence = get_smart_department_routing(problem, city)
 
-        rti_draft = f"""ADDRESSEE
+        rti_draft = f"""APPLICATION UNDER THE RIGHT TO INFORMATION ACT, 2005
+
+    ADDRESSEE
 To,
 The Public Information Officer (PIO),
 {public_authority},
@@ -315,7 +331,7 @@ The Public Information Officer (PIO),
 {city} – {pincode}
 
 SUBJECT LINE
-Subject: Application under Section 6(1) of the Right to Information Act, 2005 — Request regarding {problem[:50]}...
+    Subject: Application under Section 6(1) of the Right to Information Act, 2005 — {summarize_request(problem)}
 
 APPLICANT DETAILS
 --------------------------------------------------------------------------------
@@ -343,14 +359,19 @@ FEE DETAILS
 {state_config['fee']} Payment channel: verify the current instructions on {state_config['portal']} or with the public authority. (BPL applicants may be exempt with valid proof.)
 --------------------------------------------------------------------------------
 
+SUBMISSION NOTE
+This address is an illustrative format. Verify the exact PIO, public authority, and address on {state_config['portal']} or the relevant state RTI portal before filing.
+
 DECLARATION
-I am a citizen of India. I request that the above information be provided within the statutory time limit of 30 days as per Section 7(1) of the RTI Act, 2005.
+I hereby declare that the above information is true to the best of my knowledge. I request that the information be provided within the statutory period as per Section 7(1) of the RTI Act, 2005.
 
 Place: {city}
 Date: {current_date}
 
-                                                           {full_name}
-                                                           Signature of Applicant"""
+Yours faithfully,
+
+{full_name}
+Signature of Applicant"""
 
         # Fetch from INSTRUCTIONS_DB or use fallback for all 22 languages
         lang_pack = INSTRUCTIONS_DB.get(language)

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { apiUrl, readJsonResponse } from '../api';
-import { Copy, FileText } from 'lucide-react';
+import { Copy } from 'lucide-react';
 
 export default function RTITool() {
   const [formData, setFormData] = useState({
@@ -56,6 +56,11 @@ export default function RTITool() {
 
   return (
     <div className="max-w-7xl mx-auto p-6">
+      <div className="tool-steps" aria-label="RTI application progress">
+        <span className="active">Step 1: Describe your issue</span>
+        <span>Step 2: Review draft</span>
+        <span>Step 3: Submit guidance</span>
+      </div>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
         {/* Left Column: Input Form */}
@@ -163,7 +168,7 @@ export default function RTITool() {
               )}
             </div>
             <div className="official-document w-full h-60 p-3 bg-gray-50 border border-gray-200 rounded-md overflow-y-auto whitespace-pre-wrap text-xs text-gray-800">
-              {rtiDraft ? <><div className="document-kicker"><FileText size={14} aria-hidden="true" /> APPLICATION UNDER THE RIGHT TO INFORMATION ACT, 2005</div>{rtiDraft}</> : 'Fill out the form on the left and generate a draft to review it here.'}
+              {rtiDraft || 'Fill out the form on the left and generate a draft to review it here.'}
             </div>
             <div className="flex justify-between items-center mt-2 text-xs text-gray-500">
               <span>Character count: {charCount} / 3000</span>

@@ -366,11 +366,6 @@ I, {full_name}, a citizen of India, hereby seek the following information under 
 4. Prescribed departmental timeline or service level agreement (SLA) for resolving this issue, along with reasons for any delay.
 5. Relevant guidelines, policies, or statutory rules governing this matter for the current financial year.
 
-FEE DETAILS
---------------------------------------------------------------------------------
-{state_config['fee']} Payment channel: verify the current instructions on {state_config['portal']} or with the public authority. (BPL applicants may be exempt with valid proof.)
---------------------------------------------------------------------------------
-
 DECLARATION
 I hereby declare that the above information is true to the best of my knowledge. I request that the information be provided within the statutory period as per Section 7(1) of the RTI Act, 2005.
 

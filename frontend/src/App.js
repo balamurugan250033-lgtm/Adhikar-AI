@@ -433,9 +433,13 @@ const UI_TEXT = {
 };
 
 function cleanDraftText(text) {
-  return (text || '')
-    .replace(/\nSUBMISSION NOTE\n[\s\S]*?\nDECLARATION\n/g, '\nDECLARATION\n')
-    .replace(/\nSubmission note:.*?(?=\nI hereby declare)/g, '');
+  if (!text) return '';
+  return text
+    .replace(/\n\s*SUBMISSION NOTE[\s\S]*?(?=\n\s*DECLARATION|\n\s*I hereby declare|$)/gi, '\n\n')
+    .replace(/\n\s*Submission note:[\s\S]*?(?=\n\s*DECLARATION|\n\s*I hereby declare|$)/gi, '\n\n')
+    .replace(/\n\s*FEE DETAILS\n-+\n[\s\S]*?\n-+\n/gi, '\n\n')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
 }
 
 export default function App() {

@@ -26,7 +26,7 @@ function Dashboard() {
   return (
     <div className="dashboard-container">
       <header className="dashboard-header">
-        <h1>Adhikar AI Portal</h1>
+        <h1>Vigrah AI Portal</h1>
         <p>Access legal guidance, draft applications, and navigate civic rights.</p>
       </header>
 

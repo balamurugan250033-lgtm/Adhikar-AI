@@ -1,6 +1,6 @@
 {
-  "short_name": "Adhikar AI",
-  "name": "Adhikar AI Citizen Assistance",
+  "short_name": "Vigrah AI",
+  "name": "Vigrah AI Citizen Assistance",
   "icons": [
     {
       "src": "favicon.ico",
@@ -8,12 +8,12 @@
       "type": "image/x-icon"
     },
     {
-      "src": "adhikar-logo.png",
+      "src": "vigrah-logo.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "adhikar-logo.png",
+      "src": "vigrah-logo.png",
       "type": "image/png",
       "sizes": "512x512"
     }

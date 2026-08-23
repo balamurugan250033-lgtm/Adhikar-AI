@@ -57,7 +57,7 @@ const DEMO_HISTORY = [
 
 const UI_TEXT = {
   English: {
-    brand: "Adhikar AI", tagline: "Automated RTI Drafting Assistant",
+    brand: "Vigrah AI", tagline: "Automated RTI Drafting Assistant",
     heroTitle: "File Right to Information Applications Instantly",
     heroDesc: "Describe your problem in any language. Our legal AI drafts your application in English and guides you precisely where to submit it.",
     getStarted: "Get Started →", formTitle: "Create RTI Application",
@@ -470,7 +470,7 @@ export default function App() {
   const [loadingStage, setLoadingStage] = useState(0);
   const [highContrast, setHighContrast] = useState(false);
   const [darkMode, setDarkMode] = useState(() => {
-    const saved = localStorage.getItem('adhikar_theme');
+    const saved = localStorage.getItem('vigrah_theme');
     if (saved !== null) {
       return saved === 'dark';
     }
@@ -485,7 +485,7 @@ export default function App() {
       .then(res => setApiOnline(res.ok))
       .catch(() => setApiOnline(false));
 
-    const savedHistory = localStorage.getItem('adhikar_rti_history');
+    const savedHistory = localStorage.getItem('vigrah_rti_history');
     if (savedHistory) {
       try {
         const parsedHistory = JSON.parse(savedHistory);
@@ -506,7 +506,7 @@ export default function App() {
   }, [loading]);
 
   useEffect(() => {
-    localStorage.setItem('adhikar_theme', darkMode ? 'dark' : 'light');
+    localStorage.setItem('vigrah_theme', darkMode ? 'dark' : 'light');
     if (darkMode) {
       document.documentElement.classList.add('dark');
       document.documentElement.classList.add('dark-mode');
@@ -601,7 +601,7 @@ const handleSubmit = async (e, submissionData = formData) => {
       const updatedHistory = [newEntry, ...history];
       setHistory(updatedHistory);
       setDraftId(newDraftId);
-      localStorage.setItem('adhikar_rti_history', JSON.stringify(updatedHistory));
+      localStorage.setItem('vigrah_rti_history', JSON.stringify(updatedHistory));
 
       setStep('result');
     } catch (err) {
@@ -716,7 +716,7 @@ const handleSubmit = async (e, submissionData = formData) => {
         ? { ...item, status: nextStatus, filed_at: nextFiledAt }
         : item);
       setHistory(updatedHistory);
-      localStorage.setItem('adhikar_rti_history', JSON.stringify(updatedHistory));
+      localStorage.setItem('vigrah_rti_history', JSON.stringify(updatedHistory));
     }
   };
 
@@ -730,13 +730,13 @@ const handleSubmit = async (e, submissionData = formData) => {
 
   const handleClearHistory = () => {
     setHistory([]);
-    localStorage.removeItem('adhikar_rti_history');
+    localStorage.removeItem('vigrah_rti_history');
   };
 
   const handleDeleteHistory = (id) => {
     const updatedHistory = history.filter(item => item.id !== id);
     setHistory(updatedHistory);
-    localStorage.setItem('adhikar_rti_history', JSON.stringify(updatedHistory));
+    localStorage.setItem('vigrah_rti_history', JSON.stringify(updatedHistory));
   };
 
   const resolvedDraft = cleanDraftText(result?.rti_draft || result?.draft || result?.text || result?.application || result?.response || '');
@@ -762,7 +762,7 @@ const handleSubmit = async (e, submissionData = formData) => {
       <header className="border-b border-slate-200 bg-white sticky top-0 z-50">
         <div className="header-inner max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="brand-lockup flex items-center space-x-3 cursor-pointer" onClick={() => setStep('landing')}>
-            <img src={logo} alt="Adhikar AI logo" className="brand-logo object-contain" />
+            <img src={logo} alt="Vigrah AI logo" className="brand-logo object-contain" />
             <div>
               <span className="font-bold text-lg text-slate-900 tracking-tight">{t.brand}</span>
               <span className="block text-[10px] text-indigo-600 font-semibold uppercase tracking-wider">{t.tagline}</span>
@@ -793,7 +793,7 @@ const handleSubmit = async (e, submissionData = formData) => {
       <div className="trust-banner" role="note">
         <div className="trust-ticker">
           <ShieldCheck size={17} aria-hidden="true" />
-          <span><strong>Important:</strong> Adhikar AI is an independent citizen-assistance tool, not affiliated with, endorsed by, or operated by the Government of India. Verify details on official portals before filing.</span>
+          <span><strong>Important:</strong> Vigrah AI is an independent citizen-assistance tool, not affiliated with, endorsed by, or operated by the Government of India. Verify details on official portals before filing.</span>
         </div>
       </div>
 
@@ -869,7 +869,7 @@ const handleSubmit = async (e, submissionData = formData) => {
               </div>
               <div>
                 <h2 className="text-base font-bold text-slate-900 mb-1">How this works</h2>
-                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">Describe the records or action you need. Adhikar AI suggests a public authority and prepares a structured draft for your review. It never files an application for you.</p>
+                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">Describe the records or action you need. Vigrah AI suggests a public authority and prepares a structured draft for your review. It never files an application for you.</p>
               </div>
             </div>
             <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm flex items-start gap-4">
@@ -1152,14 +1152,14 @@ const handleSubmit = async (e, submissionData = formData) => {
         </main>
       )}
       <footer className="site-footer">
-        <div><strong>Adhikar AI</strong><span> Independent civic information support</span></div>
+        <div><strong>Vigrah AI</strong><span> Independent civic information support</span></div>
         <nav aria-label="Footer links">
           <a href="https://rtionline.gov.in" target="_blank" rel="noreferrer">Official RTI portal <ExternalLink size={13} aria-hidden="true" /></a>
           <a href="#privacy"><Info size={13} aria-hidden="true" /> Privacy</a>
           <a href="#disclaimer">Disclaimer</a>
         </nav>
         <p id="privacy">Your drafts are stored in this browser's local storage. They are not a government case record or submission.</p>
-        <p>Built for OOSC 4.0 Hackathon · GDG IIIT Allahabad · PS3 — AI for Civic & Legal Empowerment. <a href="mailto:feedback@adhikarai.example">Contact / feedback</a></p>
+        <p>Built for OOSC 4.0 Hackathon · GDG IIIT Allahabad · PS3 — AI for Civic & Legal Empowerment. <a href="mailto:feedback@vigrah.ai">Contact / feedback</a></p>
         <p id="disclaimer">Review all generated text and official instructions before filing. For complex matters, consult a qualified professional.</p>
       </footer>
     </div>

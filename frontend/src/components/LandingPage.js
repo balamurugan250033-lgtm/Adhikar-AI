@@ -12,7 +12,7 @@ export default function LandingPage({ onGetStarted }) {
   return (
     <div className="landing">
       <nav className="landing-nav">
-        <div className="logo"><Scale size={22} aria-hidden="true" /> Adhikar<span className="logo-accent"> AI</span>
+        <div className="logo"><Scale size={22} aria-hidden="true" /> Vigrah<span className="logo-accent"> AI</span>
         </div>
         <button className="btn-primary" onClick={onGetStarted}>Get Started <ArrowRight size={16} aria-hidden="true" /></button>
       </nav>
@@ -24,7 +24,7 @@ export default function LandingPage({ onGetStarted }) {
           <span className="hero-accent">Now you can use them.</span>
         </h1>
         <p className="hero-subtitle">
-          Adhikar AI translates complex legal and bureaucratic language into clear,
+          Vigrah AI translates complex legal and bureaucratic language into clear,
           actionable guidance. File RTIs, know your rights, discover schemes,
           and fill government forms — all in one place.
         </p>
@@ -42,7 +42,7 @@ export default function LandingPage({ onGetStarted }) {
       </section>
 
       <section className="features-section">
-        <div className="section-label">WHAT ADHIKAR AI CAN DO</div>
+        <div className="section-label">WHAT Vigrah AI CAN DO</div>
         <h2 className="section-title">Four tools. One platform.<br />Complete civic empowerment.</h2>
         <div className="features-grid">
           {FEATURES.map((f, i) => (
@@ -69,7 +69,7 @@ export default function LandingPage({ onGetStarted }) {
           <div className="step">
             <div className="step-num">02</div>
             <h3>AI understands & responds</h3>
-            <p>Adhikar AI identifies the relevant law or scheme and explains it simply.</p>
+            <p>Vigrah AI identifies the relevant law or scheme and explains it simply.</p>
           </div>
           <div className="step-arrow" aria-hidden="true"><ArrowRight size={18} /></div>
           <div className="step">
@@ -81,7 +81,7 @@ export default function LandingPage({ onGetStarted }) {
       </section>
 
       <section className="cta-section">
-        <h2>Know your Adhikar. Exercise your rights.</h2>
+        <h2>Know your Rights. Exercise your Power.</h2>
         <p>Every Indian citizen deserves to know and use their rights.</p>
         <button className="btn-primary btn-lg" onClick={onGetStarted}>
           Get Started <ArrowRight size={18} aria-hidden="true" />
@@ -90,11 +90,11 @@ export default function LandingPage({ onGetStarted }) {
 
       <footer className="landing-footer">
         <div className="logo" style={{justifyContent:'center', marginBottom:'0.5rem'}}>
-          <Scale size={22} aria-hidden="true" /> Adhikar<span className="logo-accent"> AI</span>
+          <Scale size={22} aria-hidden="true" /> Vigrah<span className="logo-accent"> AI</span>
         </div>
         <p>Built for OOSC 4.0 Hackathon · GDG IIIT Allahabad · PS3 — AI for Civic & Legal Empowerment</p>
-        <p><a href="mailto:feedback@adhikarai.example">Contact / feedback</a></p>
-        <p className="disclaimer">Adhikar AI provides general legal information, not legal advice. For complex matters, consult a qualified lawyer.</p>
+        <p><a href="mailto:feedback@vigrah.ai">Contact / feedback</a></p>
+        <p className="disclaimer">Vigrah AI provides general legal information, not legal advice. For complex matters, consult a qualified lawyer.</p>
       </footer>
     </div>
   );

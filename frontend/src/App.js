@@ -36,14 +36,14 @@ const LANGUAGES = [
 const STATES = ['Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chhattisgarh', 'Goa', 'Gujarat', 'Haryana', 'Himachal Pradesh', 'Jharkhand', 'Karnataka', 'Kerala', 'Madhya Pradesh', 'Maharashtra', 'Manipur', 'Meghalaya', 'Mizoram', 'Nagaland', 'Odisha', 'Punjab', 'Rajasthan', 'Sikkim', 'Tamil Nadu', 'Telangana', 'Tripura', 'Uttar Pradesh', 'Uttarakhand', 'West Bengal', 'Andaman and Nicobar Islands', 'Chandigarh', 'Dadra and Nagar Haveli and Daman and Diu', 'Delhi', 'Jammu and Kashmir', 'Ladakh', 'Lakshadweep', 'Puducherry', 'Other state'];
 
 const SAMPLE_FORM = {
-  applicant_name: 'Asha Kumar',
-  address: '12 Lake View Road',
+  applicant_name: 'BALAMURUGAN V',
+  address: 'Plot No 16M',
   city: 'Chennai',
-  pincode: '600001',
+  pincode: '600127',
   state: 'Tamil Nadu',
-  phone: '9876543210',
-  email: 'asha@example.com',
-  question: 'My ration card application has been pending for four months. Please provide the file status, reasons for delay, and action taken by the responsible officials.'
+  phone: '',
+  email: '',
+  question: 'My Aadhaar card has been lost. I request the following information under Section 6(1) of the RTI Act, 2005:\n1. Certified records and file movement details relating to the re-issuance/duplicate Aadhaar process for citizens of Chennai district.\n2. Names and designations of officials responsible for processing Aadhaar-related grievances at District Collectorate, Chennai.\n3. Current status, action taken, and reasons for any delay in processing duplicate Aadhaar requests submitted through official channels.\n4. Details of the correct procedure and authority to contact for expedited duplicate Aadhaar issuance.'
 };
 
 const EMPTY_FORM = {
@@ -52,7 +52,7 @@ const EMPTY_FORM = {
 
 const DEMO_HISTORY = [
   { id: 'demo-1', demo: true, applicant_name: SAMPLE_FORM.applicant_name, address: SAMPLE_FORM.address, city: SAMPLE_FORM.city, pincode: SAMPLE_FORM.pincode, state: SAMPLE_FORM.state, phone: SAMPLE_FORM.phone, email: SAMPLE_FORM.email, language: 'English', date: 'Demo example', question: SAMPLE_FORM.question },
-  { id: 'demo-2', demo: true, applicant_name: 'Ravi Nair', address: '44 MG Road', city: 'Bengaluru', pincode: '560001', state: 'Karnataka', phone: '9876543211', email: 'ravi@example.com', language: 'English', date: 'Demo example', question: 'The street lights on our road have not worked for three months. Please provide the complaint status, repair timeline, and responsible department records.' }
+  { id: 'demo-2', demo: true, applicant_name: 'Ravi Nair', address: '44 MG Road', city: 'Bengaluru', pincode: '560001', state: 'Karnataka', phone: '9876543211', email: 'ravi@example.com', language: 'English', date: 'Demo example', question: 'The street lights on our road have not been repaired for three months despite multiple complaints. I request the complaint file number, repair schedule, names of responsible officials, and budget allocation details for street light maintenance in our ward.' }
 ];
 
 const UI_TEXT = {

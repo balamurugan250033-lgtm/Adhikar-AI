@@ -2,7 +2,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from datetime import datetime
 
-app = FastAPI(title="Adhikar AI 22-Language Backend", version="2.6")
+app = FastAPI(title="Vigrah AI 22-Language Backend", version="3.0")
 
 app.add_middleware(
     CORSMiddleware,
@@ -40,6 +40,8 @@ def get_smart_department_routing(problem: str, city: str):
         return "Ministry of Power", f"State Electricity Board (DISCOM) - {city}", f"Public Information Officer, State DISCOM, {city}", 0.88
     elif any(k in p for k in ["college", "university", "exam", "certificate", "degree", "marksheet"]):
         return "Department of Higher Education", "Directorate of Technical Education / University Registrar", "Public Information Officer, Education Department / University", 0.86
+    elif any(k in p for k in ["aadhaar", "aadhar", "uid", "unique id", "uidai", "biometric", "enrollment"]):
+        return "Ministry of Electronics and Information Technology", f"UIDAI Regional Office / District Collectorate, {city}", f"Public Information Officer, UIDAI Regional Office / District Collectorate, {city}", 0.92
     else:
         return "Ministry of Personnel, Public Grievances and Pensions", f"District Collectorate / Public Authority, {city}", f"Public Information Officer, District Collectorate, {city}", 0.62
 
@@ -53,6 +55,8 @@ def summarize_request(problem: str):
         return "Request for police complaint records"
     if any(word in topic for word in ("electricity", "power", "bill", "transformer")):
         return "Request for electricity service records"
+    if any(word in topic for word in ("aadhaar", "aadhar", "uid", "uidai", "biometric")):
+        return "Request for Aadhaar/UIDAI service records"
     if any(word in topic for word in ("college", "university", "exam", "certificate", "degree", "marksheet")):
         return "Request for education records"
     return "Request for public service records"
@@ -310,11 +314,11 @@ def get_fallback_instructions(language: str, m: str, pa: str):
 
 @app.get("/")
 async def root():
-    return {"status": "online", "message": "Adhikar AI All 22 Indian Languages Active"}
+    return {"status": "online", "message": "Vigrah AI — All 22 Indian Languages Active"}
 
 @app.get("/api/health")
 async def health():
-    return {"status": "online", "service": "Adhikar AI API"}
+    return {"status": "online", "service": "Vigrah AI API"}
 
 @app.post("/generate-rti")
 async def generate_rti(data: dict):
@@ -333,49 +337,56 @@ async def generate_rti(data: dict):
         current_date = datetime.now().strftime("%d-%m-%Y")
         ministry, public_authority, pio, confidence = get_smart_department_routing(problem, city)
 
+        # Build the information requested section from the user's actual input
+        def build_request_body(problem: str) -> str:
+            """Extract numbered points from user input or wrap raw text as point 1."""
+            lines = [l.strip() for l in problem.strip().splitlines() if l.strip()]
+            # Check if user already numbered their points (starts with digit + dot/paren)
+            import re
+            numbered = [l for l in lines if re.match(r'^\d+[\.\)]', l)]
+            if len(numbered) >= 2:
+                # User already structured their request — use as-is
+                return "\n".join(lines)
+            else:
+                # Wrap in a single clean request block
+                return f"1. {problem.strip()}"
+
+        info_requested = build_request_body(problem)
+
         rti_draft = f"""APPLICATION UNDER THE RIGHT TO INFORMATION ACT, 2005
 
-    ADDRESSEE
 To,
 The Public Information Officer (PIO),
 {public_authority},
-{city} Division,
 {city} – {pincode}
 
-SUBJECT LINE
-    Subject: Application under Section 6(1) of the Right to Information Act, 2005 — {summarize_request(problem)}
+Subject: Application under Section 6(1) of the Right to Information Act, 2005 — {summarize_request(problem)}
 
-APPLICANT DETAILS
 --------------------------------------------------------------------------------
-Full Name                                Nationality
-{full_name}                          Indian Citizen
-
-Correspondence Address
-{address}, {city} – {pincode}
-
-Phone Number                             Email ID
-{phone}                             {email}
+Applicant Name     : {full_name}
+Nationality        : Indian Citizen
+Correspondence     : {address}, {city}, {state} – {pincode}
+{f'Phone              : {phone}' if phone and phone.strip() else ''}
+{f'Email              : {email}' if email and email.strip() else ''}
 --------------------------------------------------------------------------------
 
-INFORMATION REQUESTED
-I, {full_name}, a citizen of India, hereby seek the following information under the RTI Act, 2005:
+Sir / Madam,
 
-1. Certified copies of all official notes, memos, file movement logs, and correspondence related to {request_description(problem)}.
-2. Names, designations, and contact particulars of the public officials officially responsible for handling this matter.
-3. Official status report and actions taken regarding this pending reference/grievance.
-4. Prescribed departmental timeline or service level agreement (SLA) for resolving this issue, along with reasons for any delay.
-5. Relevant guidelines, policies, or statutory rules governing this matter for the current financial year.
+I, {full_name}, a citizen of India, hereby request the following information under Section 6(1) of the Right to Information Act, 2005:
 
-DECLARATION
-I hereby declare that the above information is true to the best of my knowledge. I request that the information be provided within the statutory period as per Section 7(1) of the RTI Act, 2005.
+{info_requested}
+
+I hereby declare that the information sought is for personal use and does not involve any commercial purpose. I request that the information be provided within the statutory period as stipulated under Section 7(1) of the RTI Act, 2005.
+
+Submission Note: Verify the exact PIO, public authority, and address on rtionline.gov.in or the relevant state RTI portal before filing.
 
 Place: {city}
-Date: {current_date}
+Date : {current_date}
 
 Yours faithfully,
 
 {full_name}
-Signature of Applicant"""
+(Signature of Applicant)"""
 
         # Fetch from INSTRUCTIONS_DB or use fallback for all 22 languages
         lang_pack = INSTRUCTIONS_DB.get(language)

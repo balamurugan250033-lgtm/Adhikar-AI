@@ -14,6 +14,19 @@ Vigrah AI is an independent informational tool. It is not a Government of India 
 - **Backend health check (local):** [http://localhost:8000](http://localhost:8000)
 - **Interactive API docs (local):** [http://localhost:8000/docs](http://localhost:8000/docs)
 
+## Screenshots
+
+<p align="center">
+  <b>Home (light and dark)</b><br>
+  <img src="docs/screenshots/home-light.png" alt="Vigrah AI home in light mode" width="48%" />
+  <img src="docs/screenshots/home-dark.png" alt="Vigrah AI home in dark mode" width="48%" />
+</p>
+
+<p align="center">
+  <b>Generated RTI draft and PDF export</b><br>
+  <img src="docs/screenshots/rti-draft.png" alt="Vigrah AI generated RTI application" width="96%" />
+</p>
+
 ## What It Does
 
 - Generates structured RTI application drafts from a citizen's issue.
@@ -98,6 +111,7 @@ Vigrah-AI/
 │   │   ├── components/      # Dashboard and citizen tools
 │   │   └── App.js           # Application shell and navigation
 │   └── start.bat            # Windows launcher
+├── docs/screenshots/        # README product screenshots
 └── README.md
 ```
 
@@ -126,4 +140,4 @@ npm test
 
 ## License
 
-License information will be added when the project license is formalized.
+This project is licensed under the [MIT License](LICENSE).

@@ -63,15 +63,15 @@ INSTRUCTIONS_DB = {
         "p1": "PHASE 1 — FORM FILL (Rtionline.gov.in)",
         "p2": "PHASE 2 — FEE PAYMENT (Immediately after submit)",
         "p3": "PHASE 3 — CONFIRMATION & TRACKING",
-        "steps": lambda m, pa: f"""1. Ministry / Department select: Select **{m}**.
-2. Public Authority select: Choose **{pa}**.
-3. Email confirm: Manually type your email in confirmation box.
-4. Name & Gender: Type name in **CAPITAL LETTERS** and select gender.
-5. Address & Pincode: Enter address, pincode, and select State: Tamil Nadu.
-6. BPL status: Select Yes/No (Yes for fee exemption, No for ₹10 fee).
-7. RTI Request Text: Paste generated text block (Max 3000 chars, no Aadhaar/PAN).
-8. Supporting Document: Upload complaint receipt as PDF (Max 1MB).
-9. Captcha & Submit: Type verification code and submit."""
+        "steps": lambda m, pa: f"""1. Ministry / Department: Select **{m}** from the portal dropdown.
+    2. Public Authority: Choose **{pa}**. Verify the exact sub-agency before continuing.
+    3. Email confirmation: Enter your own email manually and confirm it.
+    4. Name and gender: Enter your name in capital letters and select the correct gender.
+    5. Address, pincode and state: Enter your complete address and select the applicant's state.
+    6. BPL status: Select Yes only with valid BPL proof; otherwise select No and review the fee.
+    7. RTI request text: Paste the generated text. Keep it within 3000 characters and exclude Aadhaar/PAN.
+    8. Supporting document (optional): Upload a relevant PDF or receipt only if needed; check the portal size limit.
+    9. Captcha and submit: Complete the captcha, review every field, and submit the application."""
     },
     "Tamil": {
         "p1": "PHASE 1 — படிவத்தை நிரப்புதல் (RTIONLINE.GOV.IN)",

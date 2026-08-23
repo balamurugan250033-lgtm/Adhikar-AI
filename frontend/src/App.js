@@ -686,7 +686,7 @@ const handleSubmit = async (e) => {
               </button>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-5">
+            <form onSubmit={handleSubmit} autoComplete="off" className="space-y-5">
               <div>
                 <label className="block text-xs font-semibold text-slate-700 mb-1">{t.nameLabel} *</label>
                 <input
@@ -695,6 +695,7 @@ const handleSubmit = async (e) => {
                   value={formData.applicant_name}
                   onChange={handleChange}
                   placeholder={t.namePlaceholder}
+                  autoComplete="off"
                   required
                   className="w-full px-3 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-indigo-500 text-sm outline-none"
                 />
